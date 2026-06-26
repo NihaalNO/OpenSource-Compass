@@ -1,11 +1,5 @@
-import { ProtectedPlaceholder } from "@/components/common/protected-placeholder";
+import { NotificationsCenter } from "@/components/dashboard/notifications-center";
 
 export default function NotificationsPage() {
-  return (
-    <ProtectedPlaceholder
-      title="Notifications"
-      description="Recommendation and contribution notifications will be implemented in a later phase."
-    />
-  );
+  return <NotificationsCenter />;
 }
-

@@ -251,3 +251,112 @@ export interface AiLogSummary {
 export interface AiLogsResponse {
   logs: AiLogSummary[];
 }
+
+export interface DashboardActivityItem {
+  id: string;
+  type: string;
+  title: string;
+  description: string | null;
+  createdAt: string;
+}
+
+export interface DashboardResponse {
+  user: CurrentUserResponse["user"];
+  github: GitHubProfileResponse["profile"] | null;
+  metrics: {
+    skillScore: number;
+    recommendedRepositories: number;
+    recommendedIssues: number;
+    savedRepositories: number;
+    savedIssues: number;
+    unreadNotifications: number;
+  };
+  recentAiAnalyses: AiLogSummary[];
+  recentActivity: DashboardActivityItem[];
+}
+
+export interface DashboardAnalyticsResponse {
+  totals: {
+    pullRequestsOpened: number;
+    pullRequestsMerged: number;
+    issuesSolved: number;
+    repositoriesContributed: number;
+    contributionStreakDays: number;
+  };
+  languages: Array<{ name: string; value: number }>;
+  repositories: Array<{ name: string; value: number }>;
+  weeklyActivity: Array<{ label: string; prs: number; issues: number }>;
+  monthlyActivity: Array<{ label: string; prs: number; issues: number }>;
+  contributionHistory: Array<{ date: string; count: number }>;
+}
+
+export interface SavedRepositoryItem {
+  id: string;
+  savedAt: string;
+  repository: GitHubRepositorySummary & {
+    cachedAiSummary: AiRepositoryAnalysis | null;
+  };
+}
+
+export interface SavedRepositoriesResponse {
+  repositories: SavedRepositoryItem[];
+}
+
+export interface SavedIssueItem {
+  id: string;
+  savedAt: string;
+  status: string;
+  issue: GitHubIssueSummary & {
+    cachedAiExplanation: AiIssueExplanation | null;
+    repository: {
+      id: string;
+      fullName: string;
+      ownerLogin: string;
+      name: string;
+      primaryLanguage: string | null;
+    };
+  };
+}
+
+export interface SavedIssuesResponse {
+  issues: SavedIssueItem[];
+}
+
+export interface NotificationItem {
+  id: string;
+  type: string;
+  title: string;
+  body: string;
+  actionUrl: string | null;
+  readAt: string | null;
+  createdAt: string;
+}
+
+export interface NotificationsResponse {
+  notifications: NotificationItem[];
+}
+
+export interface NotificationMutationResponse {
+  success: boolean;
+}
+
+export interface AppSettings {
+  displayName: string | null;
+  theme: "system" | "light" | "dark";
+  timezone: string;
+  github: {
+    username: string | null;
+    connected: boolean;
+    lastSyncedAt: string | null;
+  };
+  ai: {
+    defaultProvider: "openai" | "gemini" | "groq" | "ollama";
+    preferredModel: string | null;
+    outputLength: "short" | "balanced" | "detailed";
+    cachePreference: "reuse" | "regenerate";
+  };
+}
+
+export interface SettingsResponse {
+  settings: AppSettings;
+}

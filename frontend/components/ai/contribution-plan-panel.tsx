@@ -40,28 +40,25 @@ export function ContributionPlanPanel() {
   }
 
   return (
-    <main className="min-h-screen bg-background px-6 py-10 text-foreground">
-      <section className="mx-auto max-w-5xl space-y-6">
+    <div className="space-y-6">
         <div>
-          <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
-            AI contribution planner
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold">Contribution Plan</h1>
+          <p className="text-sm text-muted-foreground">AI contribution planner</p>
+          <h1 className="mt-1 text-2xl font-semibold">Contribution Plan</h1>
         </div>
 
-        <div className="rounded-lg border bg-card p-5 text-card-foreground">
+        <div className="linear-card p-5">
           <div className="grid gap-3 md:grid-cols-2">
             <input
               value={repositoryId}
               onChange={(event) => setRepositoryId(event.target.value)}
               placeholder="Repository ID"
-              className="rounded-md border bg-background px-3 py-2 text-sm"
+              className="linear-input"
             />
             <input
               value={issueId}
               onChange={(event) => setIssueId(event.target.value)}
               placeholder="Issue ID, optional"
-              className="rounded-md border bg-background px-3 py-2 text-sm"
+              className="linear-input"
             />
           </div>
           <div className="mt-4 flex gap-2">
@@ -69,7 +66,7 @@ export function ContributionPlanPanel() {
               type="button"
               onClick={() => void runPlan(false)}
               disabled={isLoading || (!repositoryId && !issueId)}
-              className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90 disabled:opacity-60"
+              className="linear-button-primary"
             >
               <Sparkles className="h-4 w-4" aria-hidden="true" />
               {isLoading ? "Generating..." : plan ? "Load cached" : "Generate plan"}
@@ -79,7 +76,7 @@ export function ContributionPlanPanel() {
                 type="button"
                 onClick={() => void runPlan(true)}
                 disabled={isLoading}
-                className="rounded-md border px-3 py-2 text-sm font-medium hover:bg-accent disabled:opacity-60"
+                className="linear-button"
               >
                 Regenerate
               </button>
@@ -91,24 +88,23 @@ export function ContributionPlanPanel() {
 
         {plan ? (
           <div className="grid gap-4 md:grid-cols-2">
-            <div className="rounded-lg border bg-card p-5 text-card-foreground">
+            <div className="linear-card p-5">
               <AiResultList title="Task plan" items={plan.taskPlan} />
             </div>
-            <div className="rounded-lg border bg-card p-5 text-card-foreground">
+            <div className="linear-card p-5">
               <AiResultList title="Setup checklist" items={plan.setupChecklist} />
             </div>
-            <div className="rounded-lg border bg-card p-5 text-card-foreground">
+            <div className="linear-card p-5">
               <AiResultList title="Implementation checklist" items={plan.implementationChecklist} />
             </div>
-            <div className="rounded-lg border bg-card p-5 text-card-foreground">
+            <div className="linear-card p-5">
               <AiResultList title="Testing checklist" items={plan.testingChecklist} />
             </div>
-            <div className="rounded-lg border bg-card p-5 text-card-foreground md:col-span-2">
+            <div className="linear-card p-5 md:col-span-2">
               <AiResultList title="PR checklist" items={plan.pullRequestChecklist} />
             </div>
           </div>
         ) : null}
-      </section>
-    </main>
+      </div>
   );
 }
