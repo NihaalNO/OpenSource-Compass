@@ -6,10 +6,6 @@
     "moduleResolution": "NodeNext",
     "outDir": "dist",
     "rootDir": "src",
-    "baseUrl": ".",
-    "paths": {
-      "@opensource-compass/shared": ["../shared/src/index.ts"]
-    },
     "noEmit": false,
     "declaration": true,
     "sourceMap": true

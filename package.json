@@ -10,12 +10,12 @@
     "shared"
   ],
   "scripts": {
-    "dev": "concurrently -n shared,backend,frontend \"npm run dev -w @opensource-compass/shared\" \"npm run dev -w @opensource-compass/backend\" \"npm run dev -w @opensource-compass/frontend\"",
+    "dev": "npm run build -w @opensource-compass/shared && concurrently -n shared,backend,frontend \"npm run dev -w @opensource-compass/shared\" \"npm run dev -w @opensource-compass/backend\" \"npm run dev -w @opensource-compass/frontend\"",
     "dev:frontend": "npm run dev -w @opensource-compass/frontend",
     "dev:backend": "npm run dev -w @opensource-compass/backend",
-    "build": "npm run build --workspaces",
+    "build": "npm run build -w @opensource-compass/shared && npm run build -w @opensource-compass/backend && npm run build -w @opensource-compass/frontend",
     "lint": "npm run lint --workspaces",
-    "typecheck": "npm run typecheck --workspaces",
+    "typecheck": "npm run typecheck -w @opensource-compass/shared && npm run build -w @opensource-compass/shared && npm run typecheck -w @opensource-compass/backend && npm run typecheck -w @opensource-compass/frontend",
     "test": "npm run test --workspaces",
     "format": "prettier --write .",
     "format:check": "prettier --check ."

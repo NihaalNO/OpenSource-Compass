@@ -1,4 +1,5 @@
 import type { HealthResponse } from "@opensource-compass/shared";
+import Link from "next/link";
 
 const foundationStatus: HealthResponse = {
   status: "ok",
@@ -27,8 +28,14 @@ export default function HomePage() {
             {JSON.stringify(foundationStatus, null, 2)}
           </pre>
         </div>
+
+        <Link
+          href="/login"
+          className="inline-flex w-fit rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+        >
+          Sign in with GitHub
+        </Link>
       </section>
     </main>
   );
 }
-

@@ -4,7 +4,7 @@ import tsParser from "@typescript-eslint/parser";
 
 export default [
   {
-    ignores: ["**/node_modules/**", "**/dist/**", "**/.next/**", "**/coverage/**"]
+    ignores: ["**/node_modules/**", "**/dist/**", "**/.next/**", "**/coverage/**", "**/*.d.ts"]
   },
   js.configs.recommended,
   {
@@ -21,9 +21,17 @@ export default [
       globals: {
         console: "readonly",
         process: "readonly",
+        Buffer: "readonly",
         React: "readonly",
         Request: "readonly",
-        Response: "readonly"
+        RequestInit: "readonly",
+        Response: "readonly",
+        Headers: "readonly",
+        fetch: "readonly",
+        window: "readonly",
+        document: "readonly",
+        setTimeout: "readonly",
+        clearTimeout: "readonly"
       }
     },
     plugins: {
@@ -34,4 +42,3 @@ export default [
     }
   }
 ];
-
