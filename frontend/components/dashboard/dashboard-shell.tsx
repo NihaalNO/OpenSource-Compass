@@ -6,15 +6,15 @@ import {
   Bot,
   Compass,
   Github,
-  Inbox,
   LayoutDashboard,
   PanelLeft,
-  Settings,
+  Settings
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { LogoutButton } from "@/components/auth/logout-button";
+import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/app", label: "User Overview", icon: LayoutDashboard },
@@ -37,16 +37,16 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <div className="min-h-screen bg-background text-foreground dark">
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 border-r border-border bg-card/80 px-3 py-4 backdrop-blur lg:block">
-        <Link href="/app" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm font-semibold">
-          <span className="flex h-7 w-7 items-center justify-center rounded-md bg-primary text-primary-foreground">
+    <div className="min-h-screen bg-background text-foreground">
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-72 border-r border-border bg-card px-4 py-5 lg:block">
+        <Link href="/app" className="flex items-center gap-2 rounded-full px-2 py-2 text-sm font-semibold">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-violet text-white">
             <Compass className="h-4 w-4" aria-hidden="true" />
           </span>
           OpenSource Compass
         </Link>
 
-        <nav className="mt-6 space-y-1">
+        <nav className="mt-8 space-y-2">
           {navItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(pathname, item.href);
@@ -55,13 +55,14 @@ export function DashboardShell({ children }: { children: ReactNode }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-2 rounded-md px-2 py-2 text-sm transition ${
+                className={cn(
+                  "flex min-h-11 items-center gap-3 rounded-full px-4 py-2 text-sm font-medium transition-colors",
                   active
-                    ? "bg-accent text-foreground"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                }`}
+                    ? "bg-soft-blue-wash text-foreground"
+                    : "text-muted-foreground hover:bg-background hover:text-foreground"
+                )}
               >
-                <Icon className="h-4 w-4" aria-hidden="true" />
+                <Icon className={cn("h-4 w-4", active && "text-brand-violet")} aria-hidden="true" />
                 {item.label}
               </Link>
             );
@@ -69,26 +70,27 @@ export function DashboardShell({ children }: { children: ReactNode }) {
         </nav>
       </aside>
 
-      <div className="lg:pl-64">
-        <header className="sticky top-0 z-20 border-b border-border bg-background/85 backdrop-blur">
-          <div className="flex h-14 items-center justify-between gap-3 px-4 lg:px-6">
+      <div className="lg:pl-72">
+        <header className="sticky top-0 z-20 border-b border-border bg-card">
+          <div className="flex min-h-16 items-center justify-between gap-3 px-4 lg:px-8">
             <div className="flex items-center gap-3">
               <PanelLeft className="h-4 w-4 text-muted-foreground lg:hidden" aria-hidden="true" />
-              <div className="hidden items-center gap-2 rounded-md border border-border bg-card px-3 py-1.5 text-sm text-muted-foreground sm:flex">
-                <Inbox className="h-4 w-4" aria-hidden="true" />
-                Command center
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">OpenSource Compass</p>
+                <p className="hidden text-xs text-muted-foreground sm:block">AI-powered contribution workspace</p>
               </div>
             </div>
             <LogoutButton />
           </div>
-          <div className="flex gap-2 overflow-x-auto border-t border-border px-4 py-2 lg:hidden">
+          <div className="flex gap-2 overflow-x-auto border-t border-border px-4 py-3 lg:hidden">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`whitespace-nowrap rounded-md px-2 py-1 text-xs ${
-                  isActive(pathname, item.href) ? "bg-accent text-foreground" : "text-muted-foreground"
-                }`}
+                className={cn(
+                  "whitespace-nowrap rounded-full px-4 py-2 text-xs font-medium",
+                  isActive(pathname, item.href) ? "bg-soft-blue-wash text-foreground" : "text-muted-foreground"
+                )}
               >
                 {item.label}
               </Link>
@@ -96,7 +98,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
           </div>
         </header>
 
-        <main className="mx-auto min-h-[calc(100vh-3.5rem)] max-w-7xl px-4 py-6 lg:px-8">
+        <main className="mx-auto min-h-[calc(100vh-4rem)] max-w-page px-4 py-8 lg:px-8">
           {children}
         </main>
       </div>

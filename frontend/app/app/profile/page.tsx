@@ -1,11 +1,5 @@
-import { ProtectedPlaceholder } from "@/components/common/protected-placeholder";
+import { redirect } from "next/navigation";
 
-export default function ProfilePage() {
-  return (
-    <ProtectedPlaceholder
-      title="Profile"
-      description="Profile management will build on the authenticated user metadata created in Phase 2."
-    />
-  );
+export default function RemovedProfilePage() {
+  redirect("/app/settings");
 }
-

@@ -6,13 +6,15 @@ interface AiResultListProps {
 export function AiResultList({ title, items }: AiResultListProps) {
   return (
     <div>
-      <h3 className="text-sm font-medium">{title}</h3>
+      <h3 className="text-lg font-semibold">{title}</h3>
       {items.length === 0 ? (
-        <p className="mt-2 text-sm text-muted-foreground">No items returned.</p>
+        <p className="mt-3 rounded-[15px] border border-border bg-background p-4 text-sm text-muted-foreground">No items returned.</p>
       ) : (
-        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+        <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
           {items.map((item) => (
-            <li key={item}>{item}</li>
+            <li key={item} className="rounded-[15px] border border-border bg-background p-4 leading-6">
+              {item}
+            </li>
           ))}
         </ul>
       )}

@@ -3,6 +3,7 @@
 import type { NotificationItem } from "@opensource-compass/shared";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Badge, Button, Card, EmptyState, ErrorState, LoadingSkeleton, PageHeader } from "@/components/common/ui";
 import {
   deleteNotification,
   fetchNotifications,
@@ -45,58 +46,62 @@ export function NotificationsCenter() {
   }
 
   if (isLoading) {
-    return <div className="h-64 animate-pulse rounded-lg border border-border bg-card" />;
+    return <LoadingSkeleton rows={3} />;
   }
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="text-sm text-muted-foreground">Notifications</p>
-          <h1 className="mt-1 text-2xl font-semibold">Notification center</h1>
-        </div>
-        <button type="button" onClick={() => void markAllRead()} className="linear-button">
-          Mark all as read
-        </button>
-      </div>
+      <PageHeader
+        eyebrow="Notifications"
+        title="Notification center"
+        description="Updates for GitHub syncs, repository analysis, generated plans, and roadmap work."
+        actions={
+          <Button type="button" onClick={() => void markAllRead()}>
+            Mark all as read
+          </Button>
+        }
+      />
 
-      {error ? <div className="linear-card p-4 text-sm text-destructive">{error}</div> : null}
+      {error ? <ErrorState message={error} /> : null}
 
-      <div className="linear-card divide-y divide-border">
-        {notifications.length === 0 ? (
-          <p className="p-5 text-sm text-muted-foreground">No notifications yet.</p>
-        ) : (
-          notifications.map((notification) => (
-            <div key={notification.id} className="flex flex-wrap items-center justify-between gap-3 p-4">
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <span
-                    className={`h-2 w-2 rounded-full ${notification.readAt ? "bg-muted" : "bg-primary"}`}
-                    aria-hidden="true"
-                  />
-                  <p className="font-medium">{notification.title}</p>
+      {notifications.length === 0 ? (
+        <EmptyState title="No notifications yet" description="Useful updates will appear here after syncs, analyses, and generated plans." />
+      ) : (
+        <Card className="space-y-3">
+          {notifications.map((notification) => (
+            <div key={notification.id} className="rounded-[24px] border border-border bg-background p-4">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`h-2.5 w-2.5 rounded-full ${notification.readAt ? "bg-border" : "bg-brand-violet"}`}
+                      aria-hidden="true"
+                    />
+                    <p className="font-semibold">{notification.title}</p>
+                    <Badge>{notification.readAt ? "Read" : "Unread"}</Badge>
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{notification.body}</p>
+                  {notification.actionUrl ? (
+                    <Link href={notification.actionUrl} className="mt-3 inline-flex text-sm font-medium text-brand-violet">
+                      Open
+                    </Link>
+                  ) : null}
                 </div>
-                <p className="mt-1 text-sm text-muted-foreground">{notification.body}</p>
-                {notification.actionUrl ? (
-                  <Link href={notification.actionUrl} className="mt-2 inline-flex text-sm text-primary">
-                    Open
-                  </Link>
-                ) : null}
-              </div>
-              <div className="flex gap-2">
-                {!notification.readAt ? (
-                  <button type="button" onClick={() => void markRead(notification.id)} className="linear-button">
-                    Read
-                  </button>
-                ) : null}
-                <button type="button" onClick={() => void remove(notification.id)} className="linear-button">
-                  Delete
-                </button>
+                <div className="flex gap-2">
+                  {!notification.readAt ? (
+                    <Button type="button" onClick={() => void markRead(notification.id)}>
+                      Read
+                    </Button>
+                  ) : null}
+                  <Button type="button" onClick={() => void remove(notification.id)}>
+                    Delete
+                  </Button>
+                </div>
               </div>
             </div>
-          ))
-        )}
-      </div>
+          ))}
+        </Card>
+      )}
     </div>
   );
 }

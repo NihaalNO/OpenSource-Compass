@@ -4,6 +4,7 @@ import { ArrowLeft, Compass, Github, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
+import { Card } from "@/components/common/ui";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 function LoginContent() {
@@ -58,29 +59,26 @@ function LoginContent() {
   }
 
   return (
-    <main className="dark flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-10 text-foreground">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border))_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border))_1px,transparent_1px)] bg-[size:72px_72px] opacity-20" />
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
-
-      <section className="relative w-full max-w-md">
-        <Link href="/" className="mb-5 inline-flex items-center gap-2 text-sm text-muted-foreground transition hover:text-foreground">
+    <main className="flex min-h-screen items-center justify-center bg-background px-4 py-10 text-foreground">
+      <section className="w-full max-w-md">
+        <Link href="/" className="mb-5 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          Back to product
+          Back to landing page
         </Link>
 
-        <div className="linear-card overflow-hidden p-6">
+        <Card className="p-7">
           <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <Compass className="h-4 w-4" aria-hidden="true" />
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-violet text-white">
+              <Compass className="h-5 w-5" aria-hidden="true" />
             </span>
-            <span className="text-sm font-semibold">OpenSource Compass</span>
+            <span className="font-semibold">OpenSource Compass</span>
           </div>
 
-          <div className="mt-8">
-            <p className="text-sm text-muted-foreground">Secure GitHub OAuth</p>
-            <h1 className="mt-2 text-2xl font-semibold tracking-tight">Continue with GitHub</h1>
+          <div className="mt-9">
+            <p className="text-sm font-medium text-muted-foreground">Secure GitHub OAuth</p>
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight">Continue with GitHub</h1>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Connect your GitHub account to generate personalized open-source recommendations.
+              Connect your GitHub account to sync repositories and generate AI-powered contribution plans.
             </p>
           </div>
 
@@ -88,23 +86,23 @@ function LoginContent() {
             type="button"
             onClick={handleGithubLogin}
             disabled={isLoading || isCheckingSession}
-            className="linear-button-primary mt-6 min-h-11 w-full cursor-pointer"
+            className="osc-button-primary mt-7 w-full"
           >
             <Github className="h-4 w-4" aria-hidden="true" />
             {isCheckingSession ? "Checking session..." : isLoading ? "Redirecting..." : "Continue with GitHub"}
           </button>
 
           {error ? (
-            <div className="mt-4 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
+            <div className="mt-4 rounded-[15px] border border-destructive/30 bg-card p-3 text-sm text-destructive">
               {error}
             </div>
           ) : null}
 
-          <div className="mt-6 flex items-start gap-2 rounded-md border border-border bg-background p-3 text-xs leading-5 text-muted-foreground">
-            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+          <div className="mt-6 flex items-start gap-3 rounded-[24px] border border-border bg-background p-4 text-xs leading-5 text-muted-foreground">
+            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-brand-violet" aria-hidden="true" />
             OpenSource Compass uses GitHub OAuth and keeps AI provider keys on the backend only.
           </div>
-        </div>
+        </Card>
       </section>
     </main>
   );
@@ -114,7 +112,7 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <main className="dark flex min-h-screen items-center justify-center bg-background px-6 text-foreground">
+        <main className="flex min-h-screen items-center justify-center bg-background px-6 text-foreground">
           <p className="text-sm text-muted-foreground">Loading sign in...</p>
         </main>
       }

@@ -3,6 +3,7 @@
 import type { DashboardResponse } from "@opensource-compass/shared";
 import { Activity, BookOpen, Bot, GitFork, Github, RefreshCw, Star } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Button, Card, ErrorState, LoadingSkeleton, PageHeader, StatCard } from "@/components/common/ui";
 import { fetchDashboard } from "@/lib/api/dashboard";
 import { syncGitHubData } from "@/lib/api/github";
 
@@ -12,18 +13,6 @@ function formatDate(value: string | null) {
   }
 
   return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
-}
-
-function MetricCard({ label, value, icon: Icon }: { label: string; value: number | string; icon: typeof Github }) {
-  return (
-    <div className="linear-card p-4">
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">{label}</p>
-        <Icon className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
-      </div>
-      <p className="mt-3 text-2xl font-semibold capitalize">{value}</p>
-    </div>
-  );
 }
 
 export function OverviewDashboard() {
@@ -61,78 +50,70 @@ export function OverviewDashboard() {
   }, []);
 
   if (isLoading) {
-    return (
-      <div className="space-y-4">
-        <div className="h-28 animate-pulse rounded-lg border border-border bg-card" />
-        <div className="grid gap-3 md:grid-cols-4">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div key={index} className="h-24 animate-pulse rounded-lg border border-border bg-card" />
-          ))}
-        </div>
-      </div>
-    );
+    return <LoadingSkeleton rows={3} />;
   }
 
   if (!dashboard) {
-    return <div className="linear-card p-5 text-sm text-muted-foreground">{error ?? "No dashboard data."}</div>;
+    return <ErrorState message={error ?? "No dashboard data."} />;
   }
 
   return (
     <div className="space-y-6">
-      <section className="linear-card p-5">
+      <PageHeader
+        eyebrow="User Overview"
+        title="Your open-source control room"
+        description="GitHub sync, repository coverage, AI analysis activity, plans, roadmap status, and recent updates in one calm workspace."
+        actions={
+          <Button type="button" onClick={handleSync} disabled={isSyncing} variant="primary">
+            <RefreshCw className={`h-4 w-4 ${isSyncing ? "animate-spin" : ""}`} aria-hidden="true" />
+            {isSyncing ? "Syncing" : "Sync GitHub"}
+          </Button>
+        }
+      />
+
+      {error ? <ErrorState message={error} /> : null}
+
+      <Card>
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             {dashboard.github?.avatarUrl ? (
               <img
                 src={dashboard.github.avatarUrl}
                 alt=""
-                className="h-14 w-14 rounded-lg border border-border"
+                className="h-16 w-16 rounded-full border border-border"
               />
             ) : (
-              <div className="flex h-14 w-14 items-center justify-center rounded-lg border border-border bg-muted">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full border border-border bg-background">
                 <Github className="h-6 w-6 text-muted-foreground" aria-hidden="true" />
               </div>
             )}
             <div>
               <p className="text-sm text-muted-foreground">Welcome back</p>
-              <h1 className="text-2xl font-semibold">{dashboard.user.displayName ?? "Developer"}</h1>
+              <h2 className="text-2xl font-semibold">{dashboard.user.displayName ?? "Developer"}</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 {dashboard.github?.username ? `@${dashboard.github.username}` : "GitHub not connected"} / Last sync{" "}
                 {formatDate(dashboard.github?.lastSyncedAt ?? null)}
               </p>
             </div>
           </div>
-          <button type="button" onClick={handleSync} disabled={isSyncing} className="linear-button-primary">
-            <RefreshCw className={`h-4 w-4 ${isSyncing ? "animate-spin" : ""}`} aria-hidden="true" />
-            {isSyncing ? "Syncing" : "Sync GitHub"}
-          </button>
+          <span className="osc-badge">Roadmap {dashboard.metrics.learningRoadmapStatus.replaceAll("_", " ")}</span>
         </div>
-        {error ? <p className="mt-4 text-sm text-destructive">{error}</p> : null}
-      </section>
+      </Card>
 
-      <section className="grid gap-3 md:grid-cols-3 xl:grid-cols-6">
-        <MetricCard label="Total repos" value={dashboard.metrics.totalRepositories} icon={Github} />
-        <MetricCard label="Owned repos" value={dashboard.metrics.ownedRepositories} icon={Star} />
-        <MetricCard label="Forked repos" value={dashboard.metrics.forkedRepositories} icon={GitFork} />
-        <MetricCard label="Contributed repos" value={dashboard.metrics.contributedRepositories} icon={Activity} />
-        <MetricCard label="AI analyses" value={dashboard.metrics.aiAnalysesCompleted} icon={Bot} />
-        <MetricCard label="AI plans" value={dashboard.metrics.contributionPlansGenerated} icon={BookOpen} />
-      </section>
-
-      <section className="grid gap-3 md:grid-cols-2">
-        <MetricCard
-          label="Learning roadmap"
-          value={dashboard.metrics.learningRoadmapStatus.replaceAll("_", " ")}
-          icon={BookOpen}
-        />
-        <MetricCard label="Unread" value={dashboard.metrics.unreadNotifications} icon={Activity} />
+      <section className="grid gap-4 md:grid-cols-3 xl:grid-cols-6">
+        <StatCard label="Total repositories synced" value={dashboard.metrics.totalRepositories} icon={Github} />
+        <StatCard label="Owned repositories" value={dashboard.metrics.ownedRepositories} icon={Star} />
+        <StatCard label="Forked repositories" value={dashboard.metrics.forkedRepositories} icon={GitFork} />
+        <StatCard label="Contributed repositories" value={dashboard.metrics.contributedRepositories} icon={Activity} />
+        <StatCard label="AI analyses completed" value={dashboard.metrics.aiAnalysesCompleted} icon={Bot} />
+        <StatCard label="Plans generated" value={dashboard.metrics.contributionPlansGenerated} icon={BookOpen} />
       </section>
 
       <section className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
-        <div className="linear-card p-5">
+        <Card>
           <h2 className="text-lg font-semibold">Recent AI analyses</h2>
           {dashboard.recentAiAnalyses.length === 0 ? (
-            <p className="mt-4 text-sm text-muted-foreground">No AI analyses yet. AI actions remain user-triggered.</p>
+            <EmptyInline text="No AI analyses yet. Start from GitHub Data or AI Planner when you are ready." />
           ) : (
             <ul className="mt-4 divide-y divide-border">
               {dashboard.recentAiAnalyses.map((log) => (
@@ -141,31 +122,33 @@ export function OverviewDashboard() {
                     <p className="font-medium">{log.analysisType.replaceAll("_", " ")}</p>
                     <p className="text-muted-foreground">{log.provider} / {log.model}</p>
                   </div>
-                  <span className="rounded-md border border-border px-2 py-1 text-xs text-muted-foreground">
-                    {log.status}
-                  </span>
+                  <span className="osc-badge">{log.status}</span>
                 </li>
               ))}
             </ul>
           )}
-        </div>
+        </Card>
 
-        <div className="linear-card p-5">
+        <Card>
           <h2 className="text-lg font-semibold">Recent activity</h2>
           {dashboard.recentActivity.length === 0 ? (
-            <p className="mt-4 text-sm text-muted-foreground">Activity will appear after syncs and generated insights.</p>
+            <EmptyInline text="Activity will appear after syncs and generated insights." />
           ) : (
             <ul className="mt-4 space-y-3">
               {dashboard.recentActivity.map((activity) => (
-                <li key={activity.id} className="rounded-md border border-border bg-background p-3 text-sm">
+                <li key={activity.id} className="rounded-[15px] border border-border bg-background p-4 text-sm">
                   <p className="font-medium">{activity.title}</p>
                   <p className="mt-1 text-muted-foreground">{activity.description}</p>
                 </li>
               ))}
             </ul>
           )}
-        </div>
+        </Card>
       </section>
     </div>
   );
+}
+
+function EmptyInline({ text }: { text: string }) {
+  return <p className="mt-4 rounded-[15px] border border-border bg-background p-4 text-sm text-muted-foreground">{text}</p>;
 }

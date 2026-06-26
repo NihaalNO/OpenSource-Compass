@@ -1,5 +1,5 @@
 import { RepositoryList } from "@/components/github/repository-list";
 
-export default function RepositoryRecommendationsPage() {
+export default function GitHubDataPage() {
   return <RepositoryList />;
 }

@@ -27,11 +27,10 @@ export function LogoutButton() {
       type="button"
       onClick={handleLogout}
       disabled={isLoggingOut}
-      className="inline-flex items-center gap-2 rounded-md border px-3 py-2 text-sm font-medium transition hover:bg-accent disabled:cursor-not-allowed disabled:opacity-60"
+      className="osc-button px-4"
     >
       <LogOut className="h-4 w-4" aria-hidden="true" />
       {isLoggingOut ? "Signing out..." : "Sign out"}
     </button>
   );
 }
-

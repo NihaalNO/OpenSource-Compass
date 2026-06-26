@@ -4,74 +4,141 @@
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 220 18% 8%;
-    --card: 0 0% 100%;
-    --card-foreground: 220 18% 8%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 236 57% 60%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 220 14% 95%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 220 14% 95%;
-    --muted-foreground: 220 9% 46%;
-    --accent: 236 57% 95%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 220 13% 90%;
-    --input: 220 13% 90%;
-    --ring: 236 57% 60%;
-    --radius: 0.5rem;
-  }
+    --color-lavender-canvas: #f3f5ff;
+    --color-card-white: #ffffff;
+    --color-ink: #181c31;
+    --color-muted-iris: #757693;
+    --color-border-mist: #e5e7eb;
+    --color-hover-iris: #6b7280;
+    --color-soft-blue-wash: #dbeafe;
+    --color-brand-violet: #4457ff;
+    --color-brand-violet-light: #7583fd;
+    --color-shadow-violet: #c7c8e2;
 
-  .dark {
-    --background: 240 33% 1%;
-    --foreground: 180 7% 97%;
-    --card: 210 6% 6%;
-    --card-foreground: 180 7% 97%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 236 57% 60%;
+    --background: 228 100% 98%;
+    --foreground: 230 34% 14%;
+    --card: 0 0% 100%;
+    --card-foreground: 230 34% 14%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 230 34% 14%;
+    --primary: 234 100% 63%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 5% 8%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 210 5% 10%;
-    --muted-foreground: 220 6% 58%;
-    --accent: 236 35% 16%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 225 9% 15%;
-    --input: 225 9% 15%;
-    --ring: 236 57% 60%;
+    --secondary: 216 100% 93%;
+    --secondary-foreground: 230 34% 14%;
+    --muted: 228 48% 96%;
+    --muted-foreground: 239 12% 52%;
+    --accent: 216 100% 93%;
+    --accent-foreground: 230 34% 14%;
+    --destructive: 348 83% 47%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 234 100% 63%;
+
+    --font-thicccboi: "Thicccboi", "DM Sans", Manrope, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --text-caption: 12px;
+    --leading-caption: 1.5;
+    --text-body-sm: 14px;
+    --leading-body-sm: 1.57;
+    --text-body: 16px;
+    --leading-body: 1.56;
+    --text-body-lg: 18px;
+    --leading-body-lg: 1.56;
+    --text-subheading: 20px;
+    --leading-subheading: 1.4;
+    --text-heading-sm: 24px;
+    --leading-heading-sm: 1.33;
+    --text-heading: 36px;
+    --leading-heading: 1.25;
+    --text-heading-lg: 44px;
+    --leading-heading-lg: 1.11;
+    --text-display: 60px;
+    --leading-display: 1;
+
+    --spacing-unit: 4px;
+    --spacing-4: 4px;
+    --spacing-8: 8px;
+    --spacing-12: 12px;
+    --spacing-16: 16px;
+    --spacing-20: 20px;
+    --spacing-24: 24px;
+    --spacing-28: 28px;
+    --spacing-32: 32px;
+    --spacing-36: 36px;
+    --spacing-40: 40px;
+    --spacing-48: 48px;
+    --spacing-64: 64px;
+    --spacing-80: 80px;
+    --spacing-100: 100px;
+    --spacing-120: 120px;
+
+    --page-max-width: 1200px;
+    --section-gap: 80px;
+    --card-padding: 24px;
+    --element-gap: 16px;
+
+    --radius-small: 8px;
+    --radius-images: 12px;
+    --radius-mid: 15px;
+    --radius-cards: 24px;
+    --radius-buttons: 9999px;
+    --radius-tags: 9999px;
+    --radius-icons: 9999px;
+    --radius: 24px;
+
+    --shadow-xl: rgba(32, 36, 138, 0.25) -19px 5px 60px 4px;
   }
 
   * {
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-thicccboi);
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  ::selection {
+    background: var(--color-soft-blue-wash);
+    color: var(--color-ink);
   }
 }
 
 @layer components {
-  .linear-card {
-    @apply rounded-lg border border-border/80 bg-card text-card-foreground shadow-sm shadow-black/5;
+  .osc-card {
+    @apply rounded-[24px] border border-border bg-card text-card-foreground;
   }
 
-  .linear-button {
-    @apply inline-flex items-center justify-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm font-medium text-foreground transition hover:bg-accent disabled:cursor-not-allowed disabled:opacity-60;
+  .osc-button {
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-60;
   }
 
-  .linear-button-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60;
+  .osc-button-primary {
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-60;
+    background: linear-gradient(to right, var(--color-brand-violet), var(--color-brand-violet-light));
   }
 
-  .linear-input {
-    @apply rounded-md border border-border bg-background px-3 py-2 text-sm outline-none transition placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/30;
+  .osc-input {
+    @apply min-h-11 rounded-full border border-border bg-card px-4 py-2.5 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/25 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .osc-badge {
+    @apply inline-flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground;
+  }
+
+  .gradient-text {
+    background: linear-gradient(to right, var(--color-brand-violet), var(--color-brand-violet-light));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .mockup-glow {
+    box-shadow: var(--shadow-xl);
   }
 }

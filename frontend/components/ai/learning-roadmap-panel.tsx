@@ -1,8 +1,9 @@
 "use client";
 
 import type { AiLearningRoadmap } from "@opensource-compass/shared";
-import { Sparkles } from "lucide-react";
+import { RefreshCw, Sparkles } from "lucide-react";
 import { useState } from "react";
+import { Button, Card, EmptyState, ErrorState, PageHeader } from "@/components/common/ui";
 import { generateLearningRoadmap } from "@/lib/api/ai";
 import { AiResultList } from "./ai-result-list";
 
@@ -29,78 +30,72 @@ export function LearningRoadmapPanel() {
 
   return (
     <div className="space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <p className="text-sm text-muted-foreground">AI roadmap</p>
-            <h1 className="mt-1 text-2xl font-semibold">Learning Roadmap</h1>
-          </div>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => void runRoadmap(false)}
-              disabled={isLoading}
-              className="linear-button-primary"
-            >
+      <PageHeader
+        eyebrow="Learning Roadmap"
+        title="Skill growth tied to real repositories"
+        description="Generate a weekly learning plan from synced GitHub context and AI repository insights."
+        actions={
+          <>
+            <Button type="button" onClick={() => void runRoadmap(false)} disabled={isLoading} variant="primary">
               <Sparkles className="h-4 w-4" aria-hidden="true" />
               {isLoading ? "Generating..." : roadmap ? "Load cached" : "Generate roadmap"}
-            </button>
+            </Button>
             {roadmap ? (
-              <button
-                type="button"
-                onClick={() => void runRoadmap(true)}
-                disabled={isLoading}
-                className="linear-button"
-              >
+              <Button type="button" onClick={() => void runRoadmap(true)} disabled={isLoading}>
+                <RefreshCw className="h-4 w-4" aria-hidden="true" />
                 Regenerate
-              </button>
+              </Button>
             ) : null}
-          </div>
-        </div>
-
-        {error ? <div className="rounded-lg border border-destructive/40 p-4 text-sm text-destructive">{error}</div> : null}
-        {cached ? <p className="text-xs uppercase tracking-wide text-muted-foreground">Cached result</p> : null}
-
-        {roadmap ? (
-          <>
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="linear-card p-5">
-                <AiResultList title="Current skills" items={roadmap.currentSkills} />
-              </div>
-              <div className="linear-card p-5">
-                <AiResultList title="Missing skills" items={roadmap.missingSkills} />
-              </div>
-            </div>
-            <div className="linear-card p-5">
-              <h2 className="text-lg font-medium">Weekly plan</h2>
-              <div className="mt-4 grid gap-3">
-                {roadmap.weeklyRoadmap.map((week) => (
-                  <div key={week.week} className="rounded-md border border-border p-4">
-                    <h3 className="font-medium">Week {week.week}: {week.focus}</h3>
-                    <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                      {week.tasks.map((task) => (
-                        <li key={task}>{task}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="linear-card p-5">
-                <AiResultList title="Suggested repositories" items={roadmap.suggestedRepositories} />
-              </div>
-              <div className="linear-card p-5">
-                <AiResultList title="Suggested issues" items={roadmap.suggestedIssues} />
-              </div>
-            </div>
           </>
-        ) : (
-          <div className="linear-card p-5">
-            <p className="text-sm text-muted-foreground">
-              Generate a roadmap after syncing GitHub data and creating AI repository insights.
-            </p>
+        }
+      />
+
+      {error ? <ErrorState message={error} /> : null}
+      {cached ? <p className="text-xs font-medium uppercase text-muted-foreground">Cached result</p> : null}
+
+      {roadmap ? (
+        <>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Card>
+              <AiResultList title="Current skills" items={roadmap.currentSkills} />
+            </Card>
+            <Card>
+              <AiResultList title="Missing skills" items={roadmap.missingSkills} />
+            </Card>
           </div>
-        )}
-      </div>
+          <Card>
+            <h2 className="text-lg font-semibold">Weekly plan</h2>
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              {roadmap.weeklyRoadmap.map((week) => (
+                <div key={week.week} className="rounded-[24px] border border-border bg-background p-5">
+                  <span className="osc-badge">Week {week.week}</span>
+                  <h3 className="mt-4 text-lg font-semibold">{week.focus}</h3>
+                  <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                    {week.tasks.map((task) => (
+                      <li key={task} className="rounded-[15px] border border-border bg-card p-3 leading-6">
+                        {task}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </Card>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Card>
+              <AiResultList title="Suggested repositories" items={roadmap.suggestedRepositories} />
+            </Card>
+            <Card>
+              <AiResultList title="Suggested issues" items={roadmap.suggestedIssues} />
+            </Card>
+          </div>
+        </>
+      ) : (
+        <EmptyState
+          title="Generate a learning roadmap"
+          description="After syncing GitHub data and creating AI repository insights, generate a week-by-week path for the skills you need next."
+        />
+      )}
+    </div>
   );
 }
