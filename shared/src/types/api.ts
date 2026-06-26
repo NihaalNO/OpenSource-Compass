@@ -118,3 +118,80 @@ export interface GitHubIssueSyncResponse {
   issuesSynced: number;
   syncedAt: string;
 }
+
+export interface SkillProfileSummary {
+  id: string;
+  experienceLevel: "beginner" | "intermediate" | "advanced";
+  skillScore: number;
+  confidenceScore: number;
+  languages: Record<string, number>;
+  frameworks: Record<string, number>;
+  tools: Record<string, number>;
+  topics: Record<string, number>;
+  analyzedAt: string | null;
+}
+
+export interface SkillProfileResponse {
+  skillProfile: SkillProfileSummary | null;
+}
+
+export interface AnalyzeSkillsResponse {
+  skillProfile: SkillProfileSummary;
+  repositoryRecommendationsGenerated: number;
+  issueRecommendationsGenerated: number;
+}
+
+export interface RecommendedRepository {
+  id: string;
+  score: number;
+  skillMatchScore: number;
+  difficultyScore: number;
+  activityScore: number;
+  reason: string | null;
+  status: string;
+  isSaved: boolean;
+  repository: GitHubRepositorySummary & {
+    healthScore: number | null;
+    difficultyLevel: string | null;
+  };
+}
+
+export interface RecommendedRepositoriesResponse {
+  recommendations: RecommendedRepository[];
+}
+
+export interface RecommendedIssue {
+  id: string;
+  score: number;
+  skillMatchScore: number;
+  difficultyScore: number;
+  freshnessScore: number;
+  reason: string | null;
+  status: string;
+  isSaved: boolean;
+  issue: GitHubIssueSummary & {
+    difficultyLevel: string | null;
+    estimatedEffortHours: number | null;
+    repository: {
+      id: string;
+      fullName: string;
+      ownerLogin: string;
+      name: string;
+      primaryLanguage: string | null;
+    };
+  };
+}
+
+export interface RecommendedIssuesResponse {
+  recommendations: RecommendedIssue[];
+}
+
+export interface SavedRepositoryResponse {
+  saved: boolean;
+  repositoryId: string;
+}
+
+export interface SavedIssueResponse {
+  saved: boolean;
+  issueId: string;
+}

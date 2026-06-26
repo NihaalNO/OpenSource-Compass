@@ -1,5 +1,6 @@
 import { LogoutButton } from "@/components/auth/logout-button";
 import { GitHubDashboard } from "@/components/github/github-dashboard";
+import { RecommendationsDashboard } from "@/components/recommendations/recommendations-dashboard";
 
 export default function AppHomePage() {
   return (
@@ -16,6 +17,7 @@ export default function AppHomePage() {
         </div>
 
         <GitHubDashboard />
+        <RecommendationsDashboard />
       </section>
     </main>
   );

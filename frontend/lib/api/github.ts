@@ -10,18 +10,49 @@ import type {
 } from "@opensource-compass/shared";
 import { apiRequest } from "./client";
 
-export function fetchGitHubProfile() {
-  return apiRequest<GitHubProfileResponse>("/github/profile");
+let profileCache: GitHubProfileResponse | null = null;
+let repositoriesCache: GitHubRepositoriesResponse | null = null;
+
+export type GitHubSyncStatus = "not_synced" | "syncing" | "synced" | "failed";
+
+export function clearGitHubSummaryCache() {
+  profileCache = null;
+  repositoriesCache = null;
 }
 
-export function syncGitHubData() {
-  return apiRequest<GitHubSyncResponse>("/github/sync", {
+export function getGitHubSyncStatus(profile: GitHubProfileResponse["profile"] | null): GitHubSyncStatus {
+  return profile?.lastSyncedAt ? "synced" : "not_synced";
+}
+
+export async function fetchGitHubProfile(options: { force?: boolean } = {}) {
+  if (!options.force && profileCache) {
+    return profileCache;
+  }
+
+  profileCache = await apiRequest<GitHubProfileResponse>("/github/profile");
+
+  return profileCache;
+}
+
+export async function syncGitHubData() {
+  clearGitHubSummaryCache();
+  const response = await apiRequest<GitHubSyncResponse>("/github/sync", {
     method: "POST"
   });
+
+  clearGitHubSummaryCache();
+
+  return response;
 }
 
-export function fetchGitHubRepositories() {
-  return apiRequest<GitHubRepositoriesResponse>("/github/repositories");
+export async function fetchGitHubRepositories(options: { force?: boolean } = {}) {
+  if (!options.force && repositoriesCache) {
+    return repositoriesCache;
+  }
+
+  repositoriesCache = await apiRequest<GitHubRepositoriesResponse>("/github/repositories");
+
+  return repositoriesCache;
 }
 
 export function fetchGitHubRepository(owner: string, repo: string) {
@@ -44,4 +75,3 @@ export function syncGitHubIssues(owner: string, repo: string) {
     }
   );
 }
-

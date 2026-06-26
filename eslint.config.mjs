@@ -27,6 +27,7 @@ export default [
         RequestInit: "readonly",
         Response: "readonly",
         Headers: "readonly",
+        URLSearchParams: "readonly",
         fetch: "readonly",
         window: "readonly",
         document: "readonly",

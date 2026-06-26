@@ -49,6 +49,31 @@ interface RepositoryRow {
   } | null;
 }
 
+interface RepositoryUpsertPayload {
+  github_repo_id: number;
+  owner_login: string;
+  name: string;
+  full_name: string;
+  description: string | null;
+  html_url: string;
+  default_branch: string | null;
+  primary_language: string | null;
+  languages: Record<string, number>;
+  topics: string[];
+  stars_count: number;
+  forks_count: number;
+  open_issues_count: number;
+  watchers_count: number;
+  license_key: string | null;
+  is_archived: boolean;
+  is_fork: boolean;
+  pushed_at: string | null;
+  github_created_at: string | null;
+  github_updated_at: string | null;
+  raw_data: GitHubRepositoryPayload;
+  last_synced_at: string;
+}
+
 interface IssueRow {
   id: string;
   repository_id: string;
@@ -111,6 +136,35 @@ function toRepositorySummary(row: RepositoryRow): GitHubRepositorySummary {
   };
 }
 
+async function mapWithConcurrency<TInput, TOutput>(
+  inputs: TInput[],
+  concurrency: number,
+  mapper: (input: TInput, index: number) => Promise<TOutput>
+) {
+  const results = new Array<TOutput>(inputs.length);
+  let nextIndex = 0;
+
+  async function worker() {
+    while (nextIndex < inputs.length) {
+      const currentIndex = nextIndex;
+      const input = inputs[currentIndex];
+      nextIndex += 1;
+
+      if (input === undefined) {
+        continue;
+      }
+
+      results[currentIndex] = await mapper(input, currentIndex);
+    }
+  }
+
+  await Promise.all(
+    Array.from({ length: Math.min(concurrency, inputs.length) }, () => worker())
+  );
+
+  return results;
+}
+
 function getLabelNames(labels: GitHubIssuePayload["labels"]) {
   return labels
     .map((label) => (typeof label === "string" ? label : label.name))
@@ -165,14 +219,11 @@ export class GitHubService {
     const repositories = await client.rest<GitHubRepositoryPayload[]>(
       "/user/repos?per_page=100&sort=updated&affiliation=owner,collaborator"
     );
-    let repositoriesSynced = 0;
-
-    for (const repository of repositories.filter((repo) => !repo.archived)) {
-      await this.syncRepositoryPayload(client, repository);
-      repositoriesSynced += 1;
-    }
-
-    const contributionStatsSynced = await this.syncContributionStats(userId, client);
+    const syncableRepositories = repositories.filter((repo) => !repo.archived);
+    const [repositoriesSynced, contributionStatsSynced] = await Promise.all([
+      this.syncRepositoryPayloads(client, syncableRepositories),
+      this.syncContributionStats(userId, client)
+    ]);
     const syncedAt = new Date().toISOString();
 
     return {
@@ -292,41 +343,12 @@ export class GitHubService {
   }
 
   private async syncRepositoryPayload(client: GitHubClient, repository: GitHubRepositoryPayload) {
-    const languages = await client.rest<Record<string, number>>(
-      `/repos/${repository.owner.login}/${repository.name}/languages`
-    );
-    const now = new Date().toISOString();
+    const payload = await this.buildRepositoryUpsertPayload(client, repository);
     const { data, error } = await this.supabase
       .from("github_repositories")
-      .upsert(
-        {
-          github_repo_id: repository.id,
-          owner_login: repository.owner.login,
-          name: repository.name,
-          full_name: repository.full_name,
-          description: repository.description,
-          html_url: repository.html_url,
-          default_branch: repository.default_branch,
-          primary_language: repository.language,
-          languages,
-          topics: repository.topics ?? [],
-          stars_count: repository.stargazers_count,
-          forks_count: repository.forks_count,
-          open_issues_count: repository.open_issues_count,
-          watchers_count: repository.watchers_count,
-          license_key: repository.license?.key ?? null,
-          is_archived: repository.archived,
-          is_fork: repository.fork,
-          pushed_at: repository.pushed_at,
-          github_created_at: repository.created_at,
-          github_updated_at: repository.updated_at,
-          raw_data: repository,
-          last_synced_at: now
-        },
-        {
-          onConflict: "github_repo_id"
-        }
-      )
+      .upsert(payload, {
+        onConflict: "github_repo_id"
+      })
       .select(
         "id,owner_login,name,full_name,description,html_url,default_branch,primary_language,languages,topics,stars_count,forks_count,open_issues_count,watchers_count,license_key,is_archived,is_fork,pushed_at,github_updated_at,last_synced_at,raw_data"
       )
@@ -339,6 +361,65 @@ export class GitHubService {
     await this.updateRateLimitByClient(client, repository.owner.login);
 
     return data as RepositoryRow;
+  }
+
+  private async syncRepositoryPayloads(client: GitHubClient, repositories: GitHubRepositoryPayload[]) {
+    if (repositories.length === 0) {
+      return 0;
+    }
+
+    const payloads = await mapWithConcurrency(repositories, 8, (repository) =>
+      this.buildRepositoryUpsertPayload(client, repository)
+    );
+    const { error } = await this.supabase.from("github_repositories").upsert(payloads, {
+      onConflict: "github_repo_id"
+    });
+
+    if (error) {
+      throw error;
+    }
+
+    const firstRepository = repositories[0];
+
+    if (firstRepository) {
+      await this.updateRateLimitByClient(client, firstRepository.owner.login);
+    }
+
+    return payloads.length;
+  }
+
+  private async buildRepositoryUpsertPayload(
+    client: GitHubClient,
+    repository: GitHubRepositoryPayload
+  ): Promise<RepositoryUpsertPayload> {
+    const languages = await client.rest<Record<string, number>>(
+      `/repos/${repository.owner.login}/${repository.name}/languages`
+    );
+
+    return {
+      github_repo_id: repository.id,
+      owner_login: repository.owner.login,
+      name: repository.name,
+      full_name: repository.full_name,
+      description: repository.description,
+      html_url: repository.html_url,
+      default_branch: repository.default_branch,
+      primary_language: repository.language,
+      languages,
+      topics: repository.topics ?? [],
+      stars_count: repository.stargazers_count,
+      forks_count: repository.forks_count,
+      open_issues_count: repository.open_issues_count,
+      watchers_count: repository.watchers_count,
+      license_key: repository.license?.key ?? null,
+      is_archived: repository.archived,
+      is_fork: repository.fork,
+      pushed_at: repository.pushed_at,
+      github_created_at: repository.created_at,
+      github_updated_at: repository.updated_at,
+      raw_data: repository,
+      last_synced_at: new Date().toISOString()
+    };
   }
 
   private async syncContributionStats(userId: string, client: GitHubClient) {
