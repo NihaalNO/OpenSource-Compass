@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowIcon, Badge, Card, LinkButton, ProductMockup } from "@/components/common/ui";
+import { ArrowIcon, Badge, Card, LinkButton, PlannerProductMockup, ProductMockup } from "@/components/common/ui";
 
 const navLinks = [
   ["Features", "#features"],
@@ -210,6 +210,7 @@ export default function HomePage() {
             </Card>
           ))}
         </div>
+        <PlannerProductMockup />
       </Section>
 
       <Section id="how-it-works" eyebrow="How it works" title="From connected GitHub account to an actionable contribution.">
