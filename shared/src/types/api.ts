@@ -195,3 +195,59 @@ export interface SavedIssueResponse {
   saved: boolean;
   issueId: string;
 }
+
+export interface AiRepositoryAnalysis {
+  summary: string;
+  techStack: string[];
+  architecture: string;
+  importantFiles: string[];
+  contributionEntryPoints: string[];
+}
+
+export interface AiIssueExplanation {
+  summary: string;
+  requiredKnowledge: string[];
+  likelyFiles: string[];
+  suggestedApproach: string[];
+  difficultyEstimate: "beginner" | "intermediate" | "advanced";
+  learningOutcome: string;
+}
+
+export interface AiLearningRoadmap {
+  currentSkills: string[];
+  missingSkills: string[];
+  weeklyRoadmap: Array<{
+    week: number;
+    focus: string;
+    tasks: string[];
+  }>;
+  suggestedRepositories: string[];
+  suggestedIssues: string[];
+}
+
+export interface AiContributionPlan {
+  taskPlan: string[];
+  setupChecklist: string[];
+  implementationChecklist: string[];
+  testingChecklist: string[];
+  pullRequestChecklist: string[];
+}
+
+export interface AiAnalysisResponse<TPayload> {
+  analysis: TPayload;
+  cached: boolean;
+  logId: string;
+}
+
+export interface AiLogSummary {
+  id: string;
+  analysisType: string;
+  provider: string;
+  model: string;
+  status: string;
+  createdAt: string;
+}
+
+export interface AiLogsResponse {
+  logs: AiLogSummary[];
+}

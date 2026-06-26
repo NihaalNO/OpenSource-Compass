@@ -13,9 +13,12 @@ const envSchema = z.object({
   SUPABASE_JWT_SECRET: z.string().optional(),
   GITHUB_CLIENT_ID: z.string().optional(),
   GITHUB_CLIENT_SECRET: z.string().optional(),
-  AI_PROVIDER: z.enum(["openai", "gemini", "ollama"]).default("openai"),
+  AI_PROVIDER: z.enum(["openai", "gemini", "groq", "ollama"]).default("openai"),
+  OPENAI_BASE_URL: z.string().url().default("https://api.openai.com/v1"),
   OPENAI_API_KEY: z.string().optional(),
   GEMINI_API_KEY: z.string().optional(),
+  GROQ_API_KEY: z.string().optional(),
+  GROQ_BASE_URL: z.string().url().default("https://api.groq.com/openai/v1"),
   OLLAMA_BASE_URL: z.string().url().default("http://localhost:11434"),
   AI_DEFAULT_MODEL: z.string().optional(),
   AI_MAX_INPUT_TOKENS: z.coerce.number().int().positive().default(12000),
@@ -32,4 +35,3 @@ if (!parsedEnv.success) {
 }
 
 export const env = parsedEnv.data;
-

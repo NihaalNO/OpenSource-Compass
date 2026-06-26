@@ -1,11 +1,5 @@
-import { ProtectedPlaceholder } from "@/components/common/protected-placeholder";
+import { LearningRoadmapPanel } from "@/components/ai/learning-roadmap-panel";
 
 export default function RoadmapPage() {
-  return (
-    <ProtectedPlaceholder
-      title="Learning Roadmap"
-      description="Personalized roadmaps will be implemented after profile analysis and AI generation are available."
-    />
-  );
+  return <LearningRoadmapPanel />;
 }
-

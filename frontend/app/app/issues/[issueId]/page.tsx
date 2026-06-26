@@ -1,11 +1,11 @@
-import { ProtectedPlaceholder } from "@/components/common/protected-placeholder";
+import { IssueAiPanel } from "@/components/ai/issue-ai-panel";
 
-export default function IssueDetailPage() {
-  return (
-    <ProtectedPlaceholder
-      title="Issue Details"
-      description="AI issue explanation and contribution planning will be implemented in the AI feature phase."
-    />
-  );
+export default async function IssueDetailPage({
+  params
+}: {
+  params: Promise<{ issueId: string }>;
+}) {
+  const { issueId } = await params;
+
+  return <IssueAiPanel issueId={issueId} />;
 }
-

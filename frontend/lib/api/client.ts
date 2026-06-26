@@ -15,25 +15,42 @@ export class ApiClientError extends Error {
   }
 }
 
-export async function apiRequest<TResponse>(path: string, init: RequestInit = {}) {
+async function getSessionTokens(options: { refresh?: boolean } = {}) {
   const supabase = getSupabaseBrowserClient();
-  const { data } = await supabase.auth.getSession();
+  const { data } = options.refresh ? await supabase.auth.refreshSession() : await supabase.auth.getSession();
+
+  return {
+    accessToken: data.session?.access_token ?? null,
+    providerToken: data.session?.provider_token ?? null
+  };
+}
+
+async function sendRequest(path: string, init: RequestInit, options: { refresh?: boolean } = {}) {
+  const tokens = await getSessionTokens(options);
   const headers = new Headers(init.headers);
 
   headers.set("Content-Type", "application/json");
 
-  if (data.session?.access_token) {
-    headers.set("Authorization", `Bearer ${data.session.access_token}`);
+  if (tokens.accessToken) {
+    headers.set("Authorization", `Bearer ${tokens.accessToken}`);
   }
 
-  if (data.session?.provider_token) {
-    headers.set("x-github-provider-token", data.session.provider_token);
+  if (tokens.providerToken) {
+    headers.set("x-github-provider-token", tokens.providerToken);
   }
 
-  const response = await fetch(`${frontendEnv.apiUrl}${path}`, {
+  return fetch(`${frontendEnv.apiUrl}${path}`, {
     ...init,
     headers
   });
+}
+
+export async function apiRequest<TResponse>(path: string, init: RequestInit = {}) {
+  let response = await sendRequest(path, init);
+
+  if (response.status === 401) {
+    response = await sendRequest(path, init, { refresh: true });
+  }
 
   if (!response.ok) {
     const payload = (await response.json().catch(() => null)) as ApiErrorResponse | null;

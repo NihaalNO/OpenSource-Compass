@@ -8,6 +8,7 @@ import {
   fetchGitHubRepository,
   syncGitHubIssues
 } from "@/lib/api/github";
+import { RepositoryAiPanel } from "@/components/ai/repository-ai-panel";
 
 interface RepositoryDetailProps {
   owner: string;
@@ -125,6 +126,8 @@ export function RepositoryDetail({ owner, repo }: RepositoryDetailProps) {
               </div>
             </div>
 
+            <RepositoryAiPanel repositoryId={repository.id} />
+
             <div className="rounded-lg border bg-card p-6 text-card-foreground">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
@@ -167,6 +170,12 @@ export function RepositoryDetail({ owner, repo }: RepositoryDetailProps) {
                           </span>
                         ))}
                       </div>
+                      <a
+                        href={`/app/issues/${issue.id}`}
+                        className="mt-3 inline-flex rounded-md border px-3 py-2 text-sm font-medium hover:bg-accent"
+                      >
+                        Explain with AI
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -178,4 +187,3 @@ export function RepositoryDetail({ owner, repo }: RepositoryDetailProps) {
     </main>
   );
 }
-
