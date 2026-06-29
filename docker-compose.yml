@@ -1,10 +1,10 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: opensource-compass-postgres
+    container_name: openforge-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: opensource_compass
+      POSTGRES_DB: openforge
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
@@ -13,7 +13,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d opensource_compass"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d openforge"]
       interval: 10s
       timeout: 5s
       retries: 5

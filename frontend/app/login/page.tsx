@@ -71,7 +71,7 @@ function LoginContent() {
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-violet text-white">
               <Compass className="h-5 w-5" aria-hidden="true" />
             </span>
-            <span className="font-semibold">OpenSource Compass</span>
+            <span className="font-semibold">OpenForge</span>
           </div>
 
           <div className="mt-9">
@@ -86,7 +86,7 @@ function LoginContent() {
             type="button"
             onClick={handleGithubLogin}
             disabled={isLoading || isCheckingSession}
-            className="osc-button-primary mt-7 w-full"
+            className="openforge-button-primary mt-7 w-full"
           >
             <Github className="h-4 w-4" aria-hidden="true" />
             {isCheckingSession ? "Checking session..." : isLoading ? "Redirecting..." : "Continue with GitHub"}
@@ -100,7 +100,7 @@ function LoginContent() {
 
           <div className="mt-6 flex items-start gap-3 rounded-[24px] border border-border bg-background p-4 text-xs leading-5 text-muted-foreground">
             <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-brand-violet" aria-hidden="true" />
-            OpenSource Compass uses GitHub OAuth and keeps AI provider keys on the backend only.
+            OpenForge uses GitHub OAuth and keeps AI provider keys on the backend only.
           </div>
         </Card>
       </section>

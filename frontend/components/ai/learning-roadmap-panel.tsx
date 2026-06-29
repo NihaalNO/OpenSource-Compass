@@ -1,6 +1,6 @@
 "use client";
 
-import type { AiLearningRoadmap } from "@opensource-compass/shared";
+import type { AiLearningRoadmap } from "@openforge/shared";
 import { RefreshCw, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Button, Card, EmptyState, ErrorState, PageHeader } from "@/components/common/ui";
@@ -68,7 +68,7 @@ export function LearningRoadmapPanel() {
             <div className="mt-4 grid gap-4 md:grid-cols-2">
               {roadmap.weeklyRoadmap.map((week) => (
                 <div key={week.week} className="rounded-[24px] border border-border bg-background p-5">
-                  <span className="osc-badge">Week {week.week}</span>
+                  <span className="openforge-badge">Week {week.week}</span>
                   <h3 className="mt-4 text-lg font-semibold">{week.focus}</h3>
                   <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
                     {week.tasks.map((task) => (

@@ -1,6 +1,6 @@
 "use client";
 
-import type { CurrentUserResponse } from "@opensource-compass/shared";
+import type { CurrentUserResponse } from "@openforge/shared";
 import { usePathname, useRouter } from "next/navigation";
 import { type ReactNode, useEffect, useState } from "react";
 import { fetchCurrentUser } from "@/lib/api/auth";

@@ -110,24 +110,24 @@
 }
 
 @layer components {
-  .osc-card {
+  .openforge-card {
     @apply rounded-[24px] border border-border bg-card text-card-foreground;
   }
 
-  .osc-button {
+  .openforge-button {
     @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-60;
   }
 
-  .osc-button-primary {
+  .openforge-button-primary {
     @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-60;
     background: linear-gradient(to right, var(--color-brand-violet), var(--color-brand-violet-light));
   }
 
-  .osc-input {
+  .openforge-input {
     @apply min-h-11 rounded-full border border-border bg-card px-4 py-2.5 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/25 disabled:cursor-not-allowed disabled:opacity-60;
   }
 
-  .osc-badge {
+  .openforge-badge {
     @apply inline-flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground;
   }
 

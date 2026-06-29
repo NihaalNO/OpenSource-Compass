@@ -1,4 +1,4 @@
-import type { AppSettings, SettingsResponse } from "@opensource-compass/shared";
+import type { AppSettings, SettingsResponse } from "@openforge/shared";
 import { env } from "../config/env.js";
 import { getSupabaseServiceClient } from "../lib/supabase.js";
 

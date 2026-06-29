@@ -52,7 +52,7 @@ const features: Array<[string, string, LucideIcon]> = [
 const steps = [
   ["01", "Connect GitHub", "Authorize GitHub OAuth and sync your contribution context."],
   ["02", "Select a repository", "Pick a synced repository from the GitHub Data workspace."],
-  ["03", "Generate AI contribution plan", "Let OpenSource Compass produce a practical checklist."],
+  ["03", "Generate AI contribution plan", "Let OpenForge produce a practical checklist."],
   ["04", "Start contributing", "Work through setup, files, implementation, tests, and PR prep."]
 ];
 
@@ -62,7 +62,7 @@ function Logo() {
       <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-violet text-white">
         <Compass className="h-4 w-4" aria-hidden="true" />
       </span>
-      OpenSource Compass
+      OpenForge
     </Link>
   );
 }
@@ -103,18 +103,17 @@ export default function HomePage() {
           <span className="ml-2">Built for meaningful first pull requests</span>
         </div>
         <h1 className="mx-auto mt-8 max-w-4xl text-5xl font-bold leading-none text-foreground md:text-[60px]">
-          Contribute to open source with an <span className="gradient-text">AI-powered plan</span>.
+          Build better open-source contributions with AI.
         </h1>
         <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-muted-foreground md:text-xl">
-          OpenSource Compass connects to your GitHub, understands your repositories, analyzes codebases,
-          and turns open-source contribution into a clear step-by-step workflow.
+          OpenForge is an AI-powered workspace for understanding repositories and contributing to open source.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <LinkButton href="/login" variant="primary">
             Start with GitHub
             <ArrowIcon />
           </LinkButton>
-          <a href="#features" className="osc-button">
+          <a href="#features" className="openforge-button">
             Explore features
           </a>
         </div>
@@ -187,7 +186,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="space-y-3">
-            {["opensource-compass/frontend", "supabase/examples", "vercel/turbo"].map((repo) => (
+            {["openforge/frontend", "supabase/examples", "vercel/turbo"].map((repo) => (
               <div key={repo} className="rounded-[24px] border border-border bg-background p-4">
                 <div className="flex items-center justify-between gap-3">
                   <p className="font-medium">{repo}</p>
@@ -229,7 +228,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-page rounded-[24px] bg-card p-8 text-center md:p-14">
           <h2 className="text-4xl font-semibold leading-tight md:text-[44px]">Ready to make your next contribution?</h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-muted-foreground">
-            Connect GitHub, choose a repository, and let OpenSource Compass turn your next pull request into a plan.
+            Connect GitHub, choose a repository, and let OpenForge turn your next pull request into a plan.
           </p>
           <div className="mt-8 flex justify-center">
             <LinkButton href="/login" variant="primary">
@@ -244,7 +243,7 @@ export default function HomePage() {
         <div className="mx-auto flex max-w-page flex-col gap-8 px-4 py-10 text-sm text-muted-foreground md:flex-row md:items-start md:justify-between lg:px-6">
           <div>
             <Logo />
-            <p className="mt-4 max-w-md leading-6">AI-powered open-source contribution planning for developers moving from sync to pull request.</p>
+            <p className="mt-4 max-w-md leading-6">AI-powered workspace for understanding repositories and contributing to open source.</p>
           </div>
           <div className="flex flex-wrap gap-5">
             {navLinks.map(([label, href]) => (
@@ -253,7 +252,7 @@ export default function HomePage() {
               </a>
             ))}
           </div>
-          <p>Copyright 2026 OpenSource Compass.</p>
+          <p>Copyright 2026 OpenForge.</p>
         </div>
       </footer>
     </main>

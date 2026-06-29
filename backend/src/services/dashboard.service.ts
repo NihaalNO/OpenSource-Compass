@@ -9,7 +9,7 @@ import type {
   GitHubRepositorySummary,
   SavedIssuesResponse,
   SavedRepositoriesResponse
-} from "@opensource-compass/shared";
+} from "@openforge/shared";
 import { getCurrentUser } from "../repositories/user.repository.js";
 import { getSupabaseServiceClient } from "../lib/supabase.js";
 

@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import type { HealthResponse } from "@opensource-compass/shared";
+import type { HealthResponse } from "@openforge/shared";
 
 export function getHealth(_req: Request, res: Response<HealthResponse>) {
   res.json({

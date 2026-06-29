@@ -1,6 +1,6 @@
 "use client";
 
-import type { AppSettings, SettingsResponse } from "@opensource-compass/shared";
+import type { AppSettings, SettingsResponse } from "@openforge/shared";
 import { apiRequest } from "./client";
 
 export function fetchSettings() {

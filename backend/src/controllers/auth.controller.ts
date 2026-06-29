@@ -4,7 +4,7 @@ import type {
   CurrentUserResponse,
   LogoutResponse,
   SessionResponse
-} from "@opensource-compass/shared";
+} from "@openforge/shared";
 import { UnauthorizedError } from "../lib/http-error.js";
 import {
   completeUserOnboarding,

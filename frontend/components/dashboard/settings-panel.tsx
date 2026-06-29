@@ -1,6 +1,6 @@
 "use client";
 
-import type { AppSettings } from "@opensource-compass/shared";
+import type { AppSettings } from "@openforge/shared";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { LogoutButton } from "@/components/auth/logout-button";
@@ -56,12 +56,12 @@ export function SettingsPanel() {
             onChange={(event) => setSettings({ ...settings, displayName: event.target.value })}
             onBlur={() => void save({ displayName: settings.displayName })}
             placeholder="Display name"
-            className="osc-input w-full"
+            className="openforge-input w-full"
           />
           <select
             value={settings.theme === "dark" ? "light" : settings.theme}
             onChange={(event) => void save({ theme: event.target.value as AppSettings["theme"] })}
-            className="osc-input w-full"
+            className="openforge-input w-full"
           >
             <option value="system">System</option>
             <option value="light">Light</option>
@@ -70,7 +70,7 @@ export function SettingsPanel() {
             value={settings.timezone}
             onChange={(event) => setSettings({ ...settings, timezone: event.target.value })}
             onBlur={() => void save({ timezone: settings.timezone })}
-            className="osc-input w-full"
+            className="openforge-input w-full"
           />
         </SettingsSection>
 
@@ -89,7 +89,7 @@ export function SettingsPanel() {
             onChange={(event) =>
               void save({ ai: { defaultProvider: event.target.value as AppSettings["ai"]["defaultProvider"] } })
             }
-            className="osc-input w-full"
+            className="openforge-input w-full"
           >
             <option value="openai">OpenAI compatible</option>
             <option value="gemini">Gemini</option>
@@ -103,14 +103,14 @@ export function SettingsPanel() {
             }
             onBlur={() => void save({ ai: { preferredModel: settings.ai.preferredModel } })}
             placeholder="Preferred model"
-            className="osc-input w-full"
+            className="openforge-input w-full"
           />
           <select
             value={settings.ai.outputLength}
             onChange={(event) =>
               void save({ ai: { outputLength: event.target.value as AppSettings["ai"]["outputLength"] } })
             }
-            className="osc-input w-full"
+            className="openforge-input w-full"
           >
             <option value="short">Short</option>
             <option value="balanced">Balanced</option>
@@ -121,7 +121,7 @@ export function SettingsPanel() {
             onChange={(event) =>
               void save({ ai: { cachePreference: event.target.value as AppSettings["ai"]["cachePreference"] } })
             }
-            className="osc-input w-full"
+            className="openforge-input w-full"
           >
             <option value="reuse">Reuse cached results</option>
             <option value="regenerate">Prefer regenerate</option>
@@ -131,7 +131,7 @@ export function SettingsPanel() {
         <SettingsSection title="Account" description="Session and account actions.">
           <div className="flex flex-wrap gap-3">
             <LogoutButton />
-            <button type="button" className="osc-button" disabled>
+            <button type="button" className="openforge-button" disabled>
               Delete account
             </button>
           </div>

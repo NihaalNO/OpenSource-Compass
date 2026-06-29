@@ -1,6 +1,6 @@
 "use client";
 
-import type { AiContributionPlan, GitHubIssueSummary, GitHubRepositorySummary } from "@opensource-compass/shared";
+import type { AiContributionPlan, GitHubIssueSummary, GitHubRepositorySummary } from "@openforge/shared";
 import { RefreshCw, Sparkles } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -99,7 +99,7 @@ export function ContributionPlanPanel() {
             <select
               value={selectedRepositoryId}
               onChange={(event) => setSelectedRepositoryId(event.target.value)}
-              className="osc-input w-full"
+              className="openforge-input w-full"
             >
               <option value="">Select a synced repository</option>
               {repositories.map((repository) => (
@@ -116,7 +116,7 @@ export function ContributionPlanPanel() {
               value={selectedIssueId}
               onChange={(event) => setSelectedIssueId(event.target.value)}
               disabled={!selectedRepository || isLoadingIssues}
-              className="osc-input w-full"
+              className="openforge-input w-full"
             >
               <option value="">{isLoadingIssues ? "Loading issues..." : "Repository-level plan"}</option>
               {issues.map((issue) => (

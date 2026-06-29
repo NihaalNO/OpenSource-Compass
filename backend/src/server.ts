@@ -4,6 +4,6 @@ import { env } from "./config/env.js";
 const app = createApp();
 
 app.listen(env.PORT, () => {
-  console.log(`OpenSource Compass API listening on http://localhost:${env.PORT}`);
+  console.log(`OpenForge API listening on http://localhost:${env.PORT}`);
 });
 

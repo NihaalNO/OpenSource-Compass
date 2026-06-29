@@ -6,7 +6,7 @@ import type {
   AiLearningRoadmap,
   AiLogsResponse,
   AiRepositoryAnalysis
-} from "@opensource-compass/shared";
+} from "@openforge/shared";
 import { apiRequest } from "./client";
 
 export function analyzeRepository(repositoryId: string, regenerate = false) {

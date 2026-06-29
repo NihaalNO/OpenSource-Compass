@@ -27,7 +27,7 @@ export function LogoutButton() {
       type="button"
       onClick={handleLogout}
       disabled={isLoggingOut}
-      className="osc-button px-4"
+      className="openforge-button px-4"
     >
       <LogOut className="h-4 w-4" aria-hidden="true" />
       {isLoggingOut ? "Signing out..." : "Sign out"}

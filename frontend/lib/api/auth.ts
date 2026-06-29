@@ -5,7 +5,7 @@ import type {
   CurrentUserResponse,
   LogoutResponse,
   SessionResponse
-} from "@opensource-compass/shared";
+} from "@openforge/shared";
 import { apiRequest } from "./client";
 
 export function fetchCurrentUser() {

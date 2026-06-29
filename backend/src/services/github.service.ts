@@ -6,7 +6,7 @@ import type {
   GitHubRepositoryResponse,
   GitHubRepositorySummary,
   GitHubSyncResponse
-} from "@opensource-compass/shared";
+} from "@openforge/shared";
 import {
   GitHubClient,
   type GitHubIssuePayload,

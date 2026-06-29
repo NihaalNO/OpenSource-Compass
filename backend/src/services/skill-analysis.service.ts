@@ -1,4 +1,4 @@
-import type { SkillProfileSummary } from "@opensource-compass/shared";
+import type { SkillProfileSummary } from "@openforge/shared";
 import { getSupabaseServiceClient } from "../lib/supabase.js";
 
 interface RepositorySkillRow {

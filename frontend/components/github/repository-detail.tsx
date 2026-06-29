@@ -1,6 +1,6 @@
 "use client";
 
-import type { GitHubRepositorySummary } from "@opensource-compass/shared";
+import type { GitHubRepositorySummary } from "@openforge/shared";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Badge, Card, ErrorState, LoadingSkeleton, PageHeader } from "@/components/common/ui";
@@ -52,10 +52,10 @@ export function RepositoryDetail({ owner, repo }: RepositoryDetailProps) {
         description={repository.description ?? "No description provided."}
         actions={
           <>
-            <a href={repository.htmlUrl} target="_blank" rel="noreferrer" className="osc-button">
+            <a href={repository.htmlUrl} target="_blank" rel="noreferrer" className="openforge-button">
               Open in GitHub
             </a>
-            <Link href={`/app/contributions?repositoryId=${encodeURIComponent(repository.id)}`} className="osc-button-primary">
+            <Link href={`/app/contributions?repositoryId=${encodeURIComponent(repository.id)}`} className="openforge-button-primary">
               Generate AI Contribution Plan
             </Link>
           </>

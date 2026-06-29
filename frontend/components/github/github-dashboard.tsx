@@ -4,7 +4,7 @@ import type {
   GitHubProfileResponse,
   GitHubRepositorySummary,
   GitHubSyncResponse
-} from "@opensource-compass/shared";
+} from "@openforge/shared";
 import { RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";

@@ -1,6 +1,6 @@
 "use client";
 
-import type { DashboardResponse } from "@opensource-compass/shared";
+import type { DashboardResponse } from "@openforge/shared";
 import { Activity, BookOpen, Bot, GitFork, Github, RefreshCw, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button, Card, ErrorState, LoadingSkeleton, PageHeader, StatCard } from "@/components/common/ui";
@@ -96,7 +96,7 @@ export function OverviewDashboard() {
               </p>
             </div>
           </div>
-          <span className="osc-badge">Roadmap {dashboard.metrics.learningRoadmapStatus.replaceAll("_", " ")}</span>
+          <span className="openforge-badge">Roadmap {dashboard.metrics.learningRoadmapStatus.replaceAll("_", " ")}</span>
         </div>
       </Card>
 
@@ -122,7 +122,7 @@ export function OverviewDashboard() {
                     <p className="font-medium">{log.analysisType.replaceAll("_", " ")}</p>
                     <p className="text-muted-foreground">{log.provider} / {log.model}</p>
                   </div>
-                  <span className="osc-badge">{log.status}</span>
+                  <span className="openforge-badge">{log.status}</span>
                 </li>
               ))}
             </ul>

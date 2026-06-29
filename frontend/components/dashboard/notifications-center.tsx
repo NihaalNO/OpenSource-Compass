@@ -1,6 +1,6 @@
 "use client";
 
-import type { NotificationItem } from "@opensource-compass/shared";
+import type { NotificationItem } from "@openforge/shared";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Badge, Button, Card, EmptyState, ErrorState, LoadingSkeleton, PageHeader } from "@/components/common/ui";

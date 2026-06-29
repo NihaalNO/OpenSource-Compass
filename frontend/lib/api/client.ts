@@ -1,6 +1,6 @@
 "use client";
 
-import type { ApiErrorResponse } from "@opensource-compass/shared";
+import type { ApiErrorResponse } from "@openforge/shared";
 import { frontendEnv } from "../env";
 import { getSupabaseBrowserClient } from "../supabase/client";
 

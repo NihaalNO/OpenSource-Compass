@@ -15,11 +15,11 @@ import {
 import { cn } from "@/lib/utils";
 
 export function Card({ className, ...props }: ComponentPropsWithoutRef<"div">) {
-  return <div className={cn("osc-card p-6", className)} {...props} />;
+  return <div className={cn("openforge-card p-6", className)} {...props} />;
 }
 
 export function Badge({ className, ...props }: ComponentPropsWithoutRef<"span">) {
-  return <span className={cn("osc-badge", className)} {...props} />;
+  return <span className={cn("openforge-badge", className)} {...props} />;
 }
 
 interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
@@ -30,8 +30,8 @@ export function Button({ className, variant = "secondary", ...props }: ButtonPro
   return (
     <button
       className={cn(
-        variant === "primary" && "osc-button-primary",
-        variant === "secondary" && "osc-button",
+        variant === "primary" && "openforge-button-primary",
+        variant === "secondary" && "openforge-button",
         variant === "ghost" && "inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-60",
         className
       )}
@@ -52,8 +52,8 @@ export function LinkButton({ className, variant = "secondary", href, children }:
     <Link
       href={href}
       className={cn(
-        variant === "primary" && "osc-button-primary",
-        variant === "secondary" && "osc-button",
+        variant === "primary" && "openforge-button-primary",
+        variant === "secondary" && "openforge-button",
         variant === "ghost" && "inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
         className
       )}
@@ -279,7 +279,7 @@ export function PlannerProductMockup() {
             <div className="mt-8 space-y-3">
               <div className="rounded-[24px] border border-border bg-background p-4">
                 <p className="text-xs font-medium text-muted-foreground">Repository</p>
-                <p className="mt-2 text-sm font-semibold">opensource-compass/frontend</p>
+                <p className="mt-2 text-sm font-semibold">openforge/frontend</p>
                 <Badge className="mt-3">TypeScript</Badge>
               </div>
               <div className="rounded-[24px] border border-border bg-background p-4">

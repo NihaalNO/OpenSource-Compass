@@ -7,7 +7,7 @@ import type {
   SavedIssueResponse,
   SavedRepositoryResponse,
   SkillProfileResponse
-} from "@opensource-compass/shared";
+} from "@openforge/shared";
 import { apiRequest } from "./client";
 
 interface RecommendationFilters {

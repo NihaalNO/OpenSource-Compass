@@ -1,6 +1,6 @@
 "use client";
 
-import type { AiRepositoryAnalysis } from "@opensource-compass/shared";
+import type { AiRepositoryAnalysis } from "@openforge/shared";
 import { RefreshCw, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Button, Card, EmptyState, ErrorState } from "@/components/common/ui";

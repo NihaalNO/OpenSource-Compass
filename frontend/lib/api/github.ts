@@ -6,7 +6,7 @@ import type {
   GitHubRepositoriesResponse,
   GitHubRepositoryResponse,
   GitHubSyncResponse
-} from "@opensource-compass/shared";
+} from "@openforge/shared";
 import { apiRequest } from "./client";
 
 let profileCache: GitHubProfileResponse | null = null;

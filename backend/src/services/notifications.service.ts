@@ -1,4 +1,4 @@
-import type { NotificationMutationResponse, NotificationsResponse } from "@opensource-compass/shared";
+import type { NotificationMutationResponse, NotificationsResponse } from "@openforge/shared";
 import { getSupabaseServiceClient } from "../lib/supabase.js";
 
 export class NotificationsService {

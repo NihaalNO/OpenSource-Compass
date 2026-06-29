@@ -11,8 +11,8 @@ FROM deps AS build
 COPY shared shared
 COPY backend backend
 COPY tsconfig.base.json tsconfig.base.json
-RUN npm run build -w @opensource-compass/shared
-RUN npm run build -w @opensource-compass/backend
+RUN npm run build -w @openforge/shared
+RUN npm run build -w @openforge/backend
 
 FROM node:20-alpine AS runtime
 WORKDIR /app

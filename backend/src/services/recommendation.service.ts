@@ -9,7 +9,7 @@ import type {
   SavedIssueResponse,
   SavedRepositoryResponse,
   SkillProfileSummary
-} from "@opensource-compass/shared";
+} from "@openforge/shared";
 import { ConflictError } from "../lib/http-error.js";
 import { getSupabaseServiceClient } from "../lib/supabase.js";
 import { skillAnalysisService } from "./skill-analysis.service.js";

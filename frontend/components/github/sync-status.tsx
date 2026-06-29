@@ -1,4 +1,4 @@
-import type { GitHubProfileResponse } from "@opensource-compass/shared";
+import type { GitHubProfileResponse } from "@openforge/shared";
 
 interface SyncStatusProps {
   profile: GitHubProfileResponse["profile"] | null;

@@ -1,4 +1,4 @@
-# 🧭 OpenSource Compass
+# 🧭 OpenForge
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
@@ -6,7 +6,7 @@
 ![Express](https://img.shields.io/badge/Express-4-111111?style=for-the-badge&logo=express&logoColor=white)
 ![Supabase](https://img.shields.io/badge/Supabase-Ready-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)
 
-**OpenSource Compass** is an AI-assisted developer platform designed to help contributors discover, evaluate, and participate in open-source GitHub projects according to their profile, skills, interests, and current experience level.
+**OpenForge** is an AI-powered workspace for understanding repositories and contributing to open source.
 
 The project studies a practical research question:
 
@@ -16,7 +16,7 @@ The project studies a practical research question:
 
 ## 📌 Abstract
 
-Open-source participation is often limited by information overload, unclear contribution pathways, and the difficulty of matching a developer's abilities to suitable repositories. OpenSource Compass proposes a structured recommendation and planning system that combines GitHub data, skill analysis, repository assessment, and AI-generated contribution guidance.
+Open-source participation is often limited by information overload, unclear contribution pathways, and the difficulty of matching a developer's abilities to suitable repositories. OpenForge proposes a structured recommendation and planning system that combines GitHub data, skill analysis, repository assessment, and AI-generated contribution guidance.
 
 The current implementation provides a full-stack TypeScript foundation with a Next.js frontend, Express backend, shared contracts package, Supabase-ready authentication utilities, GitHub-oriented service layers, dashboard views, AI planning panels, and database artifacts. The repository is organized as a monorepo to keep application, API, and shared type contracts aligned during iterative research and product development.
 
@@ -74,7 +74,7 @@ flowchart LR
 ## 📁 Repository Structure
 
 ```text
-OpenSource-Compass/
+OpenForge/
 ├── frontend/                         # Next.js application workspace
 │   ├── app/                           # App Router pages and layouts
 │   │   ├── app/                       # Protected application routes
@@ -204,7 +204,7 @@ Future evaluation can measure the platform with both engineering and user-center
 
 ## 🤝 Contribution Notes
 
-OpenSource Compass is structured for modular contribution. Frontend work generally belongs in `frontend/app`, `frontend/components`, or `frontend/lib`; backend work should follow the route-controller-service structure under `backend/src`; shared API contracts should be placed in `shared/src` when both application layers need the same type definitions.
+OpenForge is structured for modular contribution. Frontend work generally belongs in `frontend/app`, `frontend/components`, or `frontend/lib`; backend work should follow the route-controller-service structure under `backend/src`; shared API contracts should be placed in `shared/src` when both application layers need the same type definitions.
 
 Before opening a pull request, run:
 

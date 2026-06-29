@@ -1,6 +1,6 @@
 "use client";
 
-import type { NotificationMutationResponse, NotificationsResponse } from "@opensource-compass/shared";
+import type { NotificationMutationResponse, NotificationsResponse } from "@openforge/shared";
 import { clearDashboardCache } from "./dashboard";
 import { apiRequest } from "./client";
 

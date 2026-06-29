@@ -5,7 +5,7 @@ import type {
   DashboardResponse,
   SavedIssuesResponse,
   SavedRepositoriesResponse
-} from "@opensource-compass/shared";
+} from "@openforge/shared";
 import { apiRequest } from "./client";
 
 let dashboardCache: DashboardResponse | null = null;

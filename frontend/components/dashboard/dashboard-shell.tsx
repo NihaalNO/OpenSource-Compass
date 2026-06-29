@@ -43,7 +43,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-violet text-white">
             <Compass className="h-4 w-4" aria-hidden="true" />
           </span>
-          OpenSource Compass
+          OpenForge
         </Link>
 
         <nav className="mt-8 space-y-2">
@@ -76,7 +76,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
             <div className="flex items-center gap-3">
               <PanelLeft className="h-4 w-4 text-muted-foreground lg:hidden" aria-hidden="true" />
               <div>
-                <p className="text-sm font-medium text-muted-foreground">OpenSource Compass</p>
+                <p className="text-sm font-medium text-muted-foreground">OpenForge</p>
                 <p className="hidden text-xs text-muted-foreground sm:block">AI-powered contribution workspace</p>
               </div>
             </div>

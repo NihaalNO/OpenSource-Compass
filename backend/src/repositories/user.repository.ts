@@ -1,5 +1,5 @@
 import type { User } from "@supabase/supabase-js";
-import type { CurrentUserResponse } from "@opensource-compass/shared";
+import type { CurrentUserResponse } from "@openforge/shared";
 import { getSupabaseServiceClient } from "../lib/supabase.js";
 
 interface GithubIdentityMetadata {

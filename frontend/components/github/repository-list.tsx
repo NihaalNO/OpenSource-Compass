@@ -1,6 +1,6 @@
 "use client";
 
-import type { GitHubRepositorySummary } from "@opensource-compass/shared";
+import type { GitHubRepositorySummary } from "@openforge/shared";
 import { GitFork, RefreshCw, Star } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -169,13 +169,13 @@ export function RepositoryList() {
               ) : null}
 
               <div className="mt-6 flex flex-wrap gap-2">
-                <a href={repository.htmlUrl} target="_blank" rel="noreferrer" className="osc-button">
+                <a href={repository.htmlUrl} target="_blank" rel="noreferrer" className="openforge-button">
                   Open in GitHub
                 </a>
-                <Link href={`/app/repositories/${repository.ownerLogin}/${repository.name}`} className="osc-button">
+                <Link href={`/app/repositories/${repository.ownerLogin}/${repository.name}`} className="openforge-button">
                   Analyze Repository
                 </Link>
-                <Link href={`/app/contributions?repositoryId=${encodeURIComponent(repository.id)}`} className="osc-button-primary">
+                <Link href={`/app/contributions?repositoryId=${encodeURIComponent(repository.id)}`} className="openforge-button-primary">
                   Generate AI Contribution Plan
                 </Link>
               </div>
