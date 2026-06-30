@@ -11,6 +11,7 @@ import { ConflictError, NotFoundError } from "../lib/http-error.js";
 import { getSupabaseServiceClient } from "../lib/supabase.js";
 import { env } from "../config/env.js";
 import { aiProviderService } from "./ai-provider.service.js";
+import { repositoryIntelligenceService } from "./repository-intelligence.service.js";
 
 type AnalysisType = "repository_summary" | "issue_explanation" | "roadmap" | "contribution_plan";
 
@@ -65,6 +66,14 @@ function truncateText(value: string | null | undefined, maxLength = 4000) {
   return value.length > maxLength ? `${value.slice(0, maxLength)}...` : value;
 }
 
+function compactKnowledgePackage(value: unknown) {
+  if (!value) {
+    return null;
+  }
+
+  return truncateText(JSON.stringify(value), 12000);
+}
+
 function toLogSummary(row: AiLogRow): AiLogSummary {
   return {
     id: row.id,
@@ -94,6 +103,8 @@ export class AiService {
       return cached;
     }
 
+    const knowledgePackage = await repositoryIntelligenceService.getLatestKnowledgePackage(userId, repositoryId);
+
     return this.generateAndLog<AiRepositoryAnalysis>({
       userId,
       repositoryId,
@@ -116,7 +127,10 @@ ${JSON.stringify(
   },
   null,
   2
-)}`,
+)}
+
+Repository Knowledge Package, if available:
+${compactKnowledgePackage(knowledgePackage)}`,
       schemaHint:
         '{"summary":"plain language summary","techStack":["string"],"architecture":"folder or architecture explanation","importantFiles":["string"],"contributionEntryPoints":["string"]}'
     });
@@ -263,6 +277,8 @@ ${JSON.stringify(contributionStats, null, 2)}`,
       return cached;
     }
 
+    const knowledgePackage = await repositoryIntelligenceService.getLatestKnowledgePackage(userId, repository.id);
+
     return this.generateAndLog<AiContributionPlan>({
       userId,
       repositoryId: repository.id,
@@ -272,6 +288,9 @@ ${JSON.stringify(contributionStats, null, 2)}`,
 
 Repository:
 ${JSON.stringify(repository, null, 2)}
+
+Repository Knowledge Package, if available:
+${compactKnowledgePackage(knowledgePackage)}
 
 Issue:
 ${JSON.stringify(issue, null, 2)}`,

@@ -5,7 +5,8 @@ import type {
   GitHubProfileResponse,
   GitHubRepositoriesResponse,
   GitHubRepositoryResponse,
-  GitHubSyncResponse
+  GitHubSyncResponse,
+  RepositoryIntelligenceResponse
 } from "@openforge/shared";
 import { apiRequest } from "./client";
 
@@ -63,5 +64,21 @@ export function fetchGitHubRepository(owner: string, repo: string) {
 export function fetchGitHubIssues(owner: string, repo: string) {
   return apiRequest<GitHubIssuesResponse>(
     `/github/repositories/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/issues`
+  );
+}
+
+export function fetchRepositoryIntelligence(repositoryId: string) {
+  return apiRequest<RepositoryIntelligenceResponse>(
+    `/repositories/${encodeURIComponent(repositoryId)}/intelligence`
+  );
+}
+
+export function generateRepositoryIntelligence(repositoryId: string, regenerate = false) {
+  return apiRequest<RepositoryIntelligenceResponse>(
+    `/repositories/${encodeURIComponent(repositoryId)}/intelligence/generate`,
+    {
+      method: "POST",
+      body: JSON.stringify({ regenerate })
+    }
   );
 }

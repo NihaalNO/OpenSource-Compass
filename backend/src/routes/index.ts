@@ -6,6 +6,7 @@ import { githubRouter } from "./github.routes.js";
 import { healthRouter } from "./health.routes.js";
 import { notificationsRouter } from "./notifications.routes.js";
 import { recommendationsRouter } from "./recommendations.routes.js";
+import { repositoryIntelligenceRouter } from "./repository-intelligence.routes.js";
 import { settingsRouter } from "./settings.routes.js";
 
 export const apiRouter = Router();
@@ -17,4 +18,5 @@ apiRouter.use("/github", githubRouter);
 apiRouter.use("/health", healthRouter);
 apiRouter.use("/notifications", notificationsRouter);
 apiRouter.use("/recommendations", recommendationsRouter);
+apiRouter.use("/repositories", repositoryIntelligenceRouter);
 apiRouter.use("/settings", settingsRouter);

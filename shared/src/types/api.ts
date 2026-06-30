@@ -122,6 +122,105 @@ export interface GitHubIssueSyncResponse {
   syncedAt: string;
 }
 
+export type RepositoryImportance = "high" | "medium" | "low";
+
+export interface RepositoryKnowledgePackage {
+  repositoryId: string;
+  fullName: string;
+  provider: "github";
+  defaultBranch: string;
+  generatedAt: string;
+  sourceLimits: {
+    maxTreeEntries: number;
+    maxFiles: number;
+    maxFileBytes: number;
+    maxTotalBytes: number;
+    truncated: boolean;
+  };
+  readme: {
+    path: string | null;
+    content: string | null;
+    summaryHint?: string | null;
+    sizeBytes: number;
+    truncated: boolean;
+  };
+  tree: {
+    totalEntries: number;
+    processedEntries: number;
+    truncated: boolean;
+    directories: Array<{
+      path: string;
+      depth: number;
+      category: string;
+      importance: RepositoryImportance;
+    }>;
+    importantFiles: Array<{
+      path: string;
+      type: string;
+      sizeBytes?: number;
+      category: string;
+      importance: RepositoryImportance;
+      reason: string;
+    }>;
+  };
+  detectedStack: {
+    languages: string[];
+    frameworks: string[];
+    packageManagers: string[];
+    databases: string[];
+    testing: string[];
+    ci: string[];
+    deployment: string[];
+  };
+  manifests: Array<{
+    path: string;
+    kind: string;
+    contentPreview: string;
+    parsed?: Record<string, unknown>;
+  }>;
+  docs: {
+    hasContributingGuide: boolean;
+    hasCodeOfConduct: boolean;
+    hasLicense: boolean;
+    docFiles: string[];
+  };
+  entryPoints: Array<{
+    path: string;
+    reason: string;
+  }>;
+  testStructure: {
+    hasTests: boolean;
+    testDirectories: string[];
+    testFiles: string[];
+    detectedFrameworks: string[];
+  };
+  workflowFiles: Array<{
+    path: string;
+    name: string;
+    contentPreview: string;
+  }>;
+  contributionReadiness: {
+    score: number;
+    level: "low" | "medium" | "high";
+    reasons: string[];
+    blockers: string[];
+  };
+  complexity: {
+    score: number;
+    level: "beginner" | "intermediate" | "advanced";
+    reasons: string[];
+  };
+  raw: {
+    selectedFilePaths: string[];
+  };
+}
+
+export interface RepositoryIntelligenceResponse {
+  knowledgePackage: RepositoryKnowledgePackage;
+  cached: boolean;
+  intelligenceId: string;
+}
+
 export interface SkillProfileSummary {
   id: string;
   experienceLevel: "beginner" | "intermediate" | "advanced";
