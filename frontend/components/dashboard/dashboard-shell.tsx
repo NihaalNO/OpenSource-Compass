@@ -3,11 +3,11 @@
 import {
   Bell,
   BookOpen,
-  Bot,
   Compass,
   Github,
   LayoutDashboard,
   PanelLeft,
+  Route,
   Settings
 } from "lucide-react";
 import Link from "next/link";
@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { href: "/app", label: "User Overview", icon: LayoutDashboard },
   { href: "/app/repositories", label: "GitHub Data", icon: Github },
-  { href: "/app/contributions", label: "AI Planner", icon: Bot },
+  { href: "/app/contributions", label: "Workspace", icon: Route },
   { href: "/app/roadmap", label: "Learning Roadmap", icon: BookOpen },
   { href: "/app/notifications", label: "Notifications", icon: Bell },
   { href: "/app/settings", label: "Settings", icon: Settings }

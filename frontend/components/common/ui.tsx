@@ -163,7 +163,7 @@ export function ProductMockup() {
               Compass
             </div>
             <div className="mt-8 space-y-2">
-              {["Overview", "GitHub Data", "AI Planner", "Roadmap"].map((item, index) => (
+              {["Overview", "GitHub Data", "Workspace", "Roadmap"].map((item, index) => (
                 <div
                   key={item}
                   className={cn(
@@ -274,7 +274,7 @@ export function PlannerProductMockup() {
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-violet text-white">
                 <Sparkles className="h-4 w-4" aria-hidden="true" />
               </span>
-              AI Planner
+              Workspace
             </div>
             <div className="mt-8 space-y-3">
               <div className="rounded-[24px] border border-border bg-background p-4">

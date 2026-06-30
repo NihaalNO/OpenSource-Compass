@@ -113,7 +113,7 @@ export function OverviewDashboard() {
         <Card>
           <h2 className="text-lg font-semibold">Recent AI analyses</h2>
           {dashboard.recentAiAnalyses.length === 0 ? (
-            <EmptyInline text="No AI analyses yet. Start from GitHub Data or AI Planner when you are ready." />
+            <EmptyInline text="No AI analyses yet. Start from GitHub Data or Workspace when you are ready." />
           ) : (
             <ul className="mt-4 divide-y divide-border">
               {dashboard.recentAiAnalyses.map((log) => (

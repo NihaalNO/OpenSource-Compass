@@ -1,11 +1,16 @@
 "use client";
 
 import type { GitHubRepositorySummary } from "@openforge/shared";
-import { GitFork, RefreshCw, Star } from "lucide-react";
+import { BrainCircuit, GitFork, RefreshCw, Star } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { Badge, Button, Card, EmptyState, ErrorState, LoadingSkeleton, PageHeader } from "@/components/common/ui";
-import { fetchGitHubRepositories, syncGitHubData } from "@/lib/api/github";
+import {
+  fetchGitHubRepositories,
+  fetchRepositoryIntelligence,
+  generateRepositoryIntelligence,
+  syncGitHubData
+} from "@/lib/api/github";
 import { cn } from "@/lib/utils";
 
 type RepositoryFilter = "all" | "owner" | "fork" | "contributor" | "organization_member";
@@ -43,11 +48,27 @@ export function RepositoryList() {
   const [activeFilter, setActiveFilter] = useState<RepositoryFilter>("all");
   const [isLoading, setIsLoading] = useState(true);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [intelligenceMap, setIntelligenceMap] = useState<Record<string, boolean>>({});
+  const [generatingRepositoryId, setGeneratingRepositoryId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   async function loadRepositories() {
     const response = await fetchGitHubRepositories();
     setRepositories(response.repositories);
+
+    const checks = await Promise.allSettled(
+      response.repositories.map(async (repository) => {
+        await fetchRepositoryIntelligence(repository.id);
+        return repository.id;
+      })
+    );
+    setIntelligenceMap(
+      Object.fromEntries(
+        checks
+          .filter((check): check is PromiseFulfilledResult<string> => check.status === "fulfilled")
+          .map((check) => [check.value, true])
+      )
+    );
   }
 
   async function handleSync() {
@@ -61,6 +82,20 @@ export function RepositoryList() {
       setError(syncError instanceof Error ? syncError.message : "Repository sync failed");
     } finally {
       setIsSyncing(false);
+    }
+  }
+
+  async function handleGenerateIntelligence(repositoryId: string) {
+    setGeneratingRepositoryId(repositoryId);
+    setError(null);
+
+    try {
+      await generateRepositoryIntelligence(repositoryId);
+      setIntelligenceMap((current) => ({ ...current, [repositoryId]: true }));
+    } catch (generateError) {
+      setError(generateError instanceof Error ? generateError.message : "Repository intelligence generation failed");
+    } finally {
+      setGeneratingRepositoryId(null);
     }
   }
 
@@ -172,12 +207,19 @@ export function RepositoryList() {
                 <a href={repository.htmlUrl} target="_blank" rel="noreferrer" className="openforge-button">
                   Open in GitHub
                 </a>
-                <Link href={`/app/repositories/${repository.ownerLogin}/${repository.name}`} className="openforge-button">
-                  Analyze Repository
+                <Link href={`/app/repositories/${repository.ownerLogin}/${repository.name}/workspace`} className="openforge-button-primary">
+                  Open Workspace
                 </Link>
-                <Link href={`/app/contributions?repositoryId=${encodeURIComponent(repository.id)}`} className="openforge-button-primary">
-                  Generate AI Contribution Plan
-                </Link>
+                {!intelligenceMap[repository.id] ? (
+                  <Button
+                    type="button"
+                    onClick={() => void handleGenerateIntelligence(repository.id)}
+                    disabled={generatingRepositoryId === repository.id}
+                  >
+                    <BrainCircuit className="h-4 w-4" aria-hidden="true" />
+                    {generatingRepositoryId === repository.id ? "Generating..." : "Generate Intelligence"}
+                  </Button>
+                ) : null}
               </div>
             </Card>
           ))}

@@ -87,9 +87,9 @@ export function ContributionPlanPanel() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="AI Repository Contribution Planner"
-        title="AI Planner"
-        description="Select a synced repository, optionally include issue context, and generate a practical contribution checklist."
+        eyebrow="Contribution Workspace"
+        title="Contribution Plan"
+        description="Legacy contribution plan generator used inside the repository workspace when deeper AI planning is needed."
       />
 
       <Card>

@@ -56,8 +56,8 @@ export function RepositoryDetail({ owner, repo }: RepositoryDetailProps) {
             <a href={repository.htmlUrl} target="_blank" rel="noreferrer" className="openforge-button">
               Open in GitHub
             </a>
-            <Link href={`/app/contributions?repositoryId=${encodeURIComponent(repository.id)}`} className="openforge-button-primary">
-              Generate AI Contribution Plan
+            <Link href={`/app/repositories/${repository.ownerLogin}/${repository.name}/workspace`} className="openforge-button-primary">
+              Open Workspace
             </Link>
           </>
         }

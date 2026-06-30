@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import { ContributionPlanPanel } from "@/components/ai/contribution-plan-panel";
+import { WorkspaceSelector } from "@/components/workspace/contribution-workspace";
 
 export default function ContributionsPage() {
   return (
-    <Suspense fallback={<div className="openforge-card p-5 text-sm text-muted-foreground">Loading AI Planner...</div>}>
-      <ContributionPlanPanel />
+    <Suspense fallback={<div className="openforge-card p-5 text-sm text-muted-foreground">Loading Workspace...</div>}>
+      <WorkspaceSelector />
     </Suspense>
   );
 }

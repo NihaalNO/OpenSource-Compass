@@ -1,14 +1,13 @@
 import {
   Bell,
   BookOpen,
-  Bot,
   CheckCircle2,
   Code2,
   Compass,
   Github,
-  GitPullRequest,
   Menu,
   RefreshCw,
+  Route,
   Settings,
   Sparkles,
   Star,
@@ -22,7 +21,7 @@ import { ArrowIcon, Badge, Card, LinkButton, PlannerProductMockup, ProductMockup
 const navLinks = [
   ["Features", "#features"],
   ["How it works", "#how-it-works"],
-  ["AI Planner", "#ai-planner"],
+  ["Workspace", "#workspace"],
   ["GitHub Data", "#github-data"]
 ];
 
@@ -36,14 +35,14 @@ const problems = [
 const solutions: Array<[string, string, LucideIcon]> = [
   ["Sync GitHub data", "Bring repositories, languages, topics, and contribution context into one calm workspace.", Github],
   ["Understand repositories", "Summarize structure, signals, and entry points before you spend hours exploring.", Code2],
-  ["Generate contribution plans", "Create setup, inspection, implementation, testing, and PR checklists.", Sparkles],
+  ["Open the workspace", "Map repository intelligence into a mission timeline, mentor prompts, and quality gates.", Sparkles],
   ["Build a learning roadmap", "Turn skill gaps into weekly practice steps tied to real open-source work.", BookOpen]
 ];
 
 const features: Array<[string, string, LucideIcon]> = [
   ["GitHub Data Workspace", "A focused view of owned, forked, contributed, and organization repositories.", Github],
-  ["AI Repository Analysis", "Plain-language architecture and contribution context for unfamiliar codebases.", Bot],
-  ["AI Contribution Planner", "Repository and issue-aware plans that turn uncertainty into next actions.", GitPullRequest],
+  ["Repository Intelligence", "Deterministic context from docs, tests, CI, manifests, and important paths.", Code2],
+  ["Contribution Workspace", "Repository-specific missions that turn uncertainty into next actions.", Route],
   ["Learning Roadmap", "Week-by-week skill building shaped by your GitHub profile and target projects.", BookOpen],
   ["Smart Notifications", "Useful updates for syncs, analyses, and generated plans without dashboard noise.", Bell],
   ["User Settings & AI Preferences", "Control display, GitHub sync status, provider choices, and output detail.", Settings]
@@ -52,7 +51,7 @@ const features: Array<[string, string, LucideIcon]> = [
 const steps = [
   ["01", "Connect GitHub", "Authorize GitHub OAuth and sync your contribution context."],
   ["02", "Select a repository", "Pick a synced repository from the GitHub Data workspace."],
-  ["03", "Generate AI contribution plan", "Let OpenForge produce a practical checklist."],
+  ["03", "Open Workspace", "Review readiness, repository map, mission, mentor prompts, and quality gate."],
   ["04", "Start contributing", "Work through setup, files, implementation, tests, and PR prep."]
 ];
 
@@ -192,20 +191,20 @@ export default function HomePage() {
                   <p className="font-medium">{repo}</p>
                   <RefreshCw className="h-4 w-4 text-brand-violet" aria-hidden="true" />
                 </div>
-                <p className="mt-2 text-sm text-muted-foreground">Analyze repository or generate an AI contribution plan.</p>
+                <p className="mt-2 text-sm text-muted-foreground">Open a workspace or generate repository intelligence.</p>
               </div>
             ))}
           </div>
         </Card>
       </Section>
 
-      <Section id="ai-planner" eyebrow="AI Planner" title="Plans that read like a senior contributor brief.">
+      <Section id="workspace" eyebrow="Contribution Workspace" title="A guided repository environment, not another static checklist.">
         <div className="grid gap-4 lg:grid-cols-5">
-          {["Setup", "Files to inspect", "Implementation steps", "Testing checklist", "Pull request checklist"].map((item) => (
+          {["Overview", "Repository map", "Mission", "Mentor prompts", "Quality gate"].map((item) => (
             <Card key={item} className="p-5">
               <CheckCircle2 className="h-5 w-5 text-brand-violet" aria-hidden="true" />
               <h3 className="mt-4 font-semibold">{item}</h3>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">Clear, scoped guidance generated from synced repository context.</p>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">Clear, scoped guidance grounded in repository intelligence.</p>
             </Card>
           ))}
         </div>

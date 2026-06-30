@@ -284,7 +284,9 @@ ${JSON.stringify(contributionStats, null, 2)}`,
       repositoryId: repository.id,
       ...(issue?.id ? { issueId: issue.id } : {}),
       analysisType: "contribution_plan",
-      prompt: `Create a contribution plan.
+      prompt: `Create a repository-specific contribution plan for OpenForge's Contribution Workspace.
+
+Do not write generic checklist items. Ground every useful step in the repository metadata and Repository Knowledge Package when available. Prefer concrete setup commands, files, folders, risks, test strategy, and pull request preparation notes. If a command or path is unknown, say exactly what signal is missing instead of inventing it.
 
 Repository:
 ${JSON.stringify(repository, null, 2)}
@@ -295,7 +297,7 @@ ${compactKnowledgePackage(knowledgePackage)}
 Issue:
 ${JSON.stringify(issue, null, 2)}`,
       schemaHint:
-        '{"taskPlan":["string"],"setupChecklist":["string"],"implementationChecklist":["string"],"testingChecklist":["string"],"pullRequestChecklist":["string"]}'
+        '{"taskPlan":["repository-specific next steps and files to inspect"],"setupChecklist":["detected commands, manifests, environment notes, or missing setup signals"],"implementationChecklist":["scoped implementation steps tied to repository paths and risks"],"testingChecklist":["detected test commands, test files, CI expectations, or manual verification notes"],"pullRequestChecklist":["specific PR summary, verification evidence, risk notes, and maintainer-friendly review prep"]}'
     });
   }
 
