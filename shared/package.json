@@ -14,13 +14,10 @@
   "scripts": {
     "dev": "tsc -w -p tsconfig.json",
     "build": "tsc -p tsconfig.json",
-    "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit",
     "test": "echo \"No shared tests configured yet\""
   },
   "devDependencies": {
-    "eslint": "^9.17.0",
     "typescript": "^5.7.2"
   }
 }
-

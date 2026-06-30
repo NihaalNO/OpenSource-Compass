@@ -122,7 +122,6 @@ const IMPORTANT_FILE_NAMES = new Set([
   "build.gradle",
   "composer.json",
   "docker-compose.yml",
-  "eslint.config.mjs",
   "go.mod",
   "go.sum",
   "next.config.js",

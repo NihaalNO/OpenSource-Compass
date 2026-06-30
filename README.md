@@ -62,7 +62,7 @@ flowchart LR
 
 | Area | Status | Notes |
 | --- | --- | --- |
-| ✅ Monorepo foundation | Implemented | npm workspaces for `frontend`, `backend`, and `shared`. |
+| ✅ Monorepo foundation | Implemented | `frontend`, `backend`, and `shared` use isolated npm installs and lockfiles. |
 | ✅ Health API | Implemented | `GET /health` and versioned health routes. |
 | ✅ Dashboard shell | Implemented | Auth-aware application area with dashboard-oriented components. |
 | ✅ GitHub service layer | Implemented | Backend client/service structure and frontend API adapters. |
@@ -100,8 +100,7 @@ OpenForge/
 ├── database/                          # SQL schema, migrations, and seeds
 ├── scripts/                           # Development, sync, and deployment script placeholders
 ├── docker-compose.yml                 # Optional local PostgreSQL service
-├── eslint.config.mjs                  # Repository ESLint configuration
-├── package.json                       # Root workspace scripts
+├── ├── package.json                       # Root helper scripts
 └── README.md                          # Research-grade project overview
 ```
 
@@ -119,8 +118,8 @@ The project follows an incremental research-and-build methodology:
 
 | Tool | Recommended Version | Purpose |
 | --- | --- | --- |
-| Node.js | 20+ | Runtime for frontend, backend, and shared workspace packages. |
-| npm | 10+ | Workspace package manager. |
+| Node.js | 20+ | Runtime for frontend, backend, and shared packages. |
+| npm | 10+ | Package manager for each app folder. |
 | Docker | Optional | Local PostgreSQL service through `docker-compose.yml`. |
 
 ## 🚀 Local Development
@@ -128,7 +127,7 @@ The project follows an incremental research-and-build methodology:
 1. Install dependencies.
 
    ```bash
-   npm install
+   npm run install:all
    ```
 
 2. Create local environment files.
@@ -148,7 +147,8 @@ The project follows an incremental research-and-build methodology:
 4. Run the development stack.
 
    ```bash
-   npm run dev
+   npm run dev:backend
+   npm run dev:frontend
    ```
 
 | Service | Default URL |
@@ -159,20 +159,19 @@ The project follows an incremental research-and-build methodology:
 ## 🧰 Command Reference
 
 ```bash
-npm run dev             # Build shared package, then run shared, backend, and frontend watchers
-npm run dev:frontend    # Start only the Next.js frontend
-npm run dev:backend     # Start only the Express backend
-npm run build           # Build shared, backend, and frontend workspaces
-npm run lint            # Run ESLint across workspaces
-npm run typecheck       # Type-check all TypeScript workspaces
-npm run test            # Run workspace test scripts
-npm run format          # Format the repository with Prettier
-npm run format:check    # Check formatting without writing changes
+npm run install:all     # Install shared, backend, and frontend dependencies independently
+npm run dev:frontend    # Build shared, then start only the Next.js frontend
+npm run dev:backend     # Build shared, then start only the Express backend
+npm run build           # Build shared, backend, and frontend packages
+npm run typecheck       # Type-check all TypeScript packages
+npm run test            # Run backend and frontend test placeholders
+npm run build --prefix backend     # Build backend from its own folder
+npm run build --prefix frontend    # Build frontend from its own folder
 ```
 
 ## 🔐 Environment Model
 
-The repository includes example environment files for the root, frontend, and backend workspaces. Runtime configuration is centralized through environment helper modules so missing or invalid values can be reported clearly during development.
+The repository includes example environment files for the root, frontend, and backend packages. Runtime configuration is centralized through environment helper modules so missing or invalid values can be reported clearly during development.
 
 ```text
 .env.example
@@ -190,7 +189,7 @@ Future evaluation can measure the platform with both engineering and user-center
 | Onboarding efficiency | Time from login to first actionable contribution plan. |
 | AI usefulness | User rating of generated roadmap, plan specificity, hallucination rate. |
 | System reliability | API uptime, response latency, failed GitHub sync attempts. |
-| Developer experience | Type coverage, lint stability, build success, maintainability of shared contracts. |
+| Developer experience | Type coverage, build success, maintainability of shared contracts. |
 
 ## 🗺️ Development Roadmap
 
@@ -209,7 +208,6 @@ OpenForge is structured for modular contribution. Frontend work generally belong
 Before opening a pull request, run:
 
 ```bash
-npm run lint
 npm run typecheck
 npm run build
 ```
