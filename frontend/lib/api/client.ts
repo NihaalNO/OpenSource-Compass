@@ -15,6 +15,20 @@ export class ApiClientError extends Error {
   }
 }
 
+function redirectToLogin() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  const currentPath = `${window.location.pathname}${window.location.search}`;
+
+  if (window.location.pathname === "/login") {
+    return;
+  }
+
+  window.location.assign(`/login?next=${encodeURIComponent(currentPath)}`);
+}
+
 async function getSessionTokens(options: { refresh?: boolean } = {}) {
   const supabase = getSupabaseBrowserClient();
   const { data } = options.refresh ? await supabase.auth.refreshSession() : await supabase.auth.getSession();
@@ -63,11 +77,23 @@ export async function apiRequest<TResponse>(path: string, init: RequestInit = {}
 
   if (!response.ok) {
     const payload = (await response.json().catch(() => null)) as ApiErrorResponse | null;
+    const message = payload?.error.message ?? "Request failed";
+
+    if (response.status === 401) {
+      await getSupabaseBrowserClient().auth.signOut().catch(() => undefined);
+      redirectToLogin();
+
+      throw new ApiClientError(
+        response.status,
+        payload?.error.code ?? "unauthorized",
+        "Your session expired. Please sign in again to continue."
+      );
+    }
 
     throw new ApiClientError(
       response.status,
       payload?.error.code ?? "request_failed",
-      payload?.error.message ?? "Request failed"
+      message
     );
   }
 
